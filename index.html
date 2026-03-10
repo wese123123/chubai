@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>初白代肝 - 全游戏专业代练平台</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Microsoft YaHei", sans-serif; }
+        :root {
+            --primary: #3498db; /* 主色-蓝 */
+            --primary-dark: #2980b9; /* 主色深 */
+            --primary-light: #e3f2fd; /* 主色浅 */
+            --accent: #e74c3c; /* 强调色-红（价格/活动） */
+            --accent-light: #fef2f2; /* 强调色浅 */
+            --warning: #f39c12; /* 警告色-橙（优惠） */
+            --success: #2ecc71; /* 成功色-绿 */
+            --text-dark: #2c3e50; /* 文字深 */
+            --text-gray: #666; /* 文字灰 */
+            --text-light: #999; /* 文字浅 */
+            --bg-light: #f5f7fa; /* 背景浅 */
+            --bg-white: #ffffff; /* 背景白 */
+            --border: #ddd; /* 边框色 */
+        }
+        body { background: var(--bg-light); color: var(--text-dark); }
+        .header { background: #2c3e50; color: white; padding: 20px 0; text-align: center; position: relative; }
+        .header h1 { font-size: 28px; margin-bottom: 8px; }
+        .header p { font-size: 16px; opacity: 0.9; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .search-bar { text-align: center; margin: 20px 0; }
+        .search-bar input {
+            width: 60%;
+            padding: 14px 20px;
+            border: 2px solid var(--primary);
+            border-radius: 30px;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s;
+        }
+        .search-bar input:focus {
+            width: 70%;
+            border-color: var(--primary-dark);
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+        .filter-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+            padding: 10px;
+            background: var(--bg-white);
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .filter-bar > div {
+            flex: 1;
+            min-width: 150px;
+        }
+        .filter-bar label {
+            font-size: 14px;
+            color: var(--text-gray);
+            margin-right: 8px;
+        }
+        .filter-bar select {
+            padding: 6px 10px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .tabs { display: flex; flex-wrap: wrap; gap: 10px; margin: 20px 0; border-bottom: 1px solid var(--border); padding-bottom: 10px; justify-content: center; }
+        .tab-btn { padding: 8px 16px; background: var(--bg-white); border: 1px solid var(--border); border-radius: 20px; cursor: pointer; transition: all 0.3s; }
+        .tab-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+        .game-section { margin: 30px 0; }
+        .game-title { font-size: 24px; color: var(--text-dark); margin-bottom: 20px; padding-left: 10px; border-left: 4px solid var(--primary); }
+        .service-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .service-card {
+            background: var(--bg-white);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+        }
+        .service-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 0;
+            background: linear-gradient(to bottom, var(--primary), #9b59b6);
+            transition: height 0.3s ease;
+        }
+        .service-card:hover::before {
+            height: 100%;
+        }
+        .service-name { font-size: 18px; color: var(--text-dark); margin-bottom: 8px; }
+        .service-desc { color: var(--text-gray); font-size: 14px; margin-bottom: 12px; }
+        .service-price {
+            color: var(--accent);
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: inline-block;
+            padding: 4px 8px;
+            background: var(--accent-light);
+            border-radius: 4px;
+            border: 1px solid #fee2e2;
+        }
+        .order-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: linear-gradient(to right, var(--primary), var(--primary-dark));
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 14px;
+            transition: all 0.3s;
+            box-shadow: 0 2px 5px rgba(52,152,219,0.2);
+        }
+        .order-btn:hover {
+            background: linear-gradient(to right, var(--primary-dark), #1abc9c);
+            box-shadow: 0 6px 12px rgba(52,152,219,0.3);
+            transform: translateY(-2px);
+        }
+        .tag {
+            display: inline-block;
+            padding: 4px 10px;
+            background: var(--primary-light);
+            color: var(--primary-dark);
+            border-radius: 20px;
+            font-size: 12px;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+        .footer { background: #2c3e50; color: white; text-align: center; padding: 20px 0; margin-top: 50px; }
+        /* 评价轮播 */
+        .review-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        .review-container h2 {
+            font-size: 24px;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            text-align: center;
+            padding-left: 0;
+            border-left: none;
+        }
+        .review-carousel {
+            display: flex;
+            overflow-x: auto;
+            gap: 20px;
+            padding: 10px 0;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .review-carousel::-webkit-scrollbar { display: none; }
+        .review-card {
+            min-width: 280px;
+            background: var(--bg-white);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+        }
+        .review-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.12);
+        }
+        .review-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .review-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+            object-fit: cover;
+        }
+        .review-user {
+            font-size: 16px;
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+        .review-rating {
+            color: #f1c40f;
+        }
+        .review-content {
+            font-size: 14px;
+            color: var(--text-gray);
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        .review-meta {
+            font-size: 12px;
+            color: var(--text-light);
+        }
+        /* 服务对比 */
+        .compare-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        .compare-container h2 {
+            font-size: 24px;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            text-align: center;
+            padding-left: 0;
+            border-left: none;
+        }
+        .compare-table {
+            background: var(--bg-white);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            overflow-x: auto;
+        }
+        .compare-table table {
+            width: 100%;
+            min-width: 800px;
+            border-collapse: collapse;
+        }
+        .compare-table th {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 2px solid var(--border);
+            font-size: 16px;
+            background: #f8f9fa;
+        }
+        .compare-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border);
+            text-align: center;
+            font-size: 14px;
+        }
+        .compare-table tr:nth-child(even) {
+            background: #fafafa;
+        }
+        .compare-table td:first-child {
+            text-align: left;
+            font-weight: 600;
+        }
+        /* 优惠活动 */
+        .activity-banner {
+            max-width: 1200px;
+            margin: 10px auto;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .activity-banner a {
+            display: block;
+            background: linear-gradient(to right, var(--accent), var(--warning));
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 18px;
+            text-decoration: none;
+        }
+        .discount-rule {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff3cd;
+            border-radius: 10px;
+            border-left: 4px solid var(--warning);
+        }
+        .discount-rule h3 {
+            font-size: 18px;
+            color: #856404;
+            margin-bottom: 10px;
+        }
+        .discount-rule ul {
+            color: #721c24;
+            font-size: 14px;
+            line-height: 1.8;
+            padding-left: 20px;
+        }
+        /* 服务保障 */
+        .security-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        .security-container h2 {
+            font-size: 24px;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            text-align: center;
+            padding-left: 0;
+            border-left: none;
+        }
+        .security-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .security-card {
+            background: var(--bg-white);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+        .security-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 15px;
+            background: var(--primary-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: var(--primary-dark);
+        }
+        .security-title {
+            font-size: 18px;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+        }
+        .security-desc {
+            font-size: 14px;
+            color: var(--text-gray);
+            line-height: 1.6;
+        }
+        /* 用户反馈入口 */
+        .feedback-entry {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        .feedback-card {
+            background: linear-gradient(to right, var(--primary-light), var(--bg-white));
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+        }
+        .feedback-card h3 {
+            font-size: 20px;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+        }
+        .feedback-card p {
+            font-size: 14px;
+            color: var(--text-gray);
+            margin-bottom: 20px;
+        }
+        .feedback-btn {
+            display: inline-block;
+            padding: 10px 25px;
+            background: var(--primary);
+            color: white;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 16px;
+            transition: all 0.3s;
+            box-shadow: 0 2px 5px rgba(52,152,219,0.2);
+        }
+        .feedback-btn:hover {
+            background: var(--primary-dark);
+            box-shadow: 0 6px 12px rgba(52,152,219,0.3);
+            transform: translateY(-2px);
+        }
+        /* 滚动条美化 */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-light);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-light);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+        }
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .search-bar input {
+                width: 90% !important;
+            }
+            .search-bar input:focus {
+                width: 95% !important;
+            }
+            .filter-bar {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .filter-bar > div {
+                min-width: 100%;
+            }
+            .review-card {
+                min-width: 90%;
+            }
+            .service-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>初白代肝 - 全游戏纯手工安全代练</h1>
+        <p>原神/星穹铁道/无限暖暖/鸣潮/绝区零 | 透明价格 | 无隐形消费 | 专业高效</p>
+        <div style="position: absolute; top: 20px; right: 20px;">
+            <a href="order.html#query" style="color: white; text-decoration: underline; font-size: 14px;">订单状态查询</a>
+        </div>
+    </div>
+
+    <!-- 优惠活动Banner -->
+    <div class="activity-banner">
+        <a href="#discount" style="display: block; background: linear-gradient(to right, var(--accent), var(--warning)); color: white; padding: 15px; text-align: center; font-size: 18px; text-decoration: none;">
+            🎉 限时优惠：新用户首单立减10元 | 两单连订9折 | 托管季付8折 🎉
+        </a>
+    </div>
+
+    <div class="container">
+        <div class="search-bar">
+            <input type="text" placeholder="搜索服务（如：原神森林书、星穹托管、暖暖全收集）">
+        </div>
+
+        <!-- 筛选栏 -->
+        <div class="filter-bar">
+            <div>
+                <label>价格筛选</label>
+                <select id="priceFilter" onchange="filterServices()">
+                    <option value="all">全部价格</option>
+                    <option value="low">50元以下</option>
+                    <option value="mid">50-200元</option>
+                    <option value="high">200元以上</option>
+                </select>
+            </div>
+            <div>
+                <label>服务类型</label>
+                <select id="serviceFilter" onchange="filterServices()">
+                    <option value="all">全部类型</option>
+                    <option value="main">主线任务</option>
+                    <option value="explore">地图探索</option>
+                    <option value="host">日常托管</option>
+                    <option value="character">角色养成</option>
+                    <option value="activity">版本活动</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-btn active">全部游戏</button>
+            <button class="tab-btn">原神</button>
+            <button class="tab-btn">星穹铁道</button>
+            <button class="tab-btn">无限暖暖</button>
+            <button class="tab-btn">鸣潮</button>
+            <button class="tab-btn">绝区零</button>
+        </div>
+
+        <!-- 原神专区 -->
+        <div class="game-section">
+            <h2 class="game-title">原神 | 服务明细</h2>
+            <div class="service-grid">
+                <div class="service-card">
+                    <div class="service-name">主线任务（全版本）</div>
+                    <div class="service-desc">蒙德/璃月/稻妻/须弥/枫丹/纳塔主线，含副本解锁</div>
+                    <div class="service-price">价格：15-45元/幕</div>
+                    <span class="tag">版本全覆盖</span>
+                    <a href="order.html" class="order-btn">立即下单</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-name">地图全探索</div>
+                    <div class="service-desc">宝箱/神瞳/流明石/净光翎收集，分区域报价</div>
+                    <div class="service-price">价格：50-240元/区域</div>
+                    <span class="tag">全收集</span>
+                    <a href="order.html" class="order-btn">立即下单</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-name">日常托管</div>
+                    <div class="service-desc">委托+清体力+派遣+壶币，多档位可选</div>
+                    <div class="service-price">价格：2-4元/天 | 50-100元/月</div>
+                    <span class="tag">稳定高效</span>
+                    <a href="order.html" class="order-btn">立即下单</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-name">角色毕业养成</div>
+                    <div class="service-desc">突破材料+天赋9/9/9+圣遗物毕业</div>
+                    <div class="service-price">价格：400-600元/角色</div>
+                    <span class="tag">纯手工</span>
+                    <a href="order.html" class="order-btn">立即下单</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-name">世界任务全清</div>
+                    <div class="service-desc">森林书/沙漠书/海洋书/花神书等系列任务</div>
+                    <div class="service-price">价格：20-260元/系列</div>
+                    <span class="tag">含隐藏任务</span>
+                    <a href="order.html" class="order-btn">立即下单</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-name">深境螺旋满星</div>
+                    <div class="service-desc">前8层托管+9-12层满星，补星服务可选</div>
+                    <div class="service-price">价格：5-10元/间 | 88-168元/满星</div>
+                    <span class="tag">效率保障</span>
+                    <a href="order.html" class="order-btn">立即下单</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 星穹铁道专区 -->
+        <div class="game-section">
+            <h2 class="game-title">崩坏星穹铁道 | 服务明细</h2>
+            <div class="service-grid">
+                <div class="service-card">
+                    <div class="service-name">主线/支线任务</div>
+                    <div class="service-desc">空间站/雅利洛/仙舟/匹诺康尼主线+支线全清</div>
+                    <div class="service-price">价格：5-85元/章</div>
+                    <span class="tag">含星琼</span>
+                    <a href="order.html" class="order-btn">立即下单</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-name">地图全收集</div>
+                    <div class="service-desc">宝箱/次元扑满/解谜宝箱/任务宝箱全收集</div>
+                    <div class="service-price">价格：58-415元/区域</div>
+                    <span class="tag">小鸟/贴纸可选</span>
+                    <a href="order.html" class="order-btn">立即下单</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-name">日常托管</div>
+                    <div class="service-desc">实训+清体力+模拟宇宙积分+活动托管</div>
+                    <div class="service-price">价格：2-4元/天 | 35-260元/月</div>
+                    <span class="tag">多档位</span>
+                    <a href="order.html" class="order-btn">立即下单</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-name">忘却之庭满星</div>
+                    <div class="service-desc">1-12层首通+满星，混沌回忆托管</div>
+                    <div class="service-price">价格：15-25元/层 | 98-188元/满星</div>
+                    <span class="tag">稳定通关</span>
+                    <a href="order.html" class="order-btn">立即下单</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-name">模拟宇宙全通</div>
+                    <div class="service-desc">3-9层首通+每周积分托管+智识解锁</div>
+                    <div class="service-price">价格：15-320元/服务</div>
+                    <span class="tag">全奖励</span>
+                    <a href="order.html" class="order-btn">立即下单</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-name">角色/光锥材料</div>
+                    <div class="service-desc">突破材料+光锥升级材料+遗器毕业</div>
+                    <div class="service-price">价格：48-118元/套</div>
+                    <span class="tag">高效采集</span>
+                    <a href="order.html" class="order-btn">立即下单</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 无限暖暖专区 -->
+        <div class="game-section">
+            <h2 class="game-title">无限暖暖 | 服务明细</h2>
+            <div class="service-grid">
+                <div class="service-card">
+                    <div class="service-name">主线全通</div>
+                    <div class="service-desc">序章-第八章主线+间章，含全收集选项</div>
+                    <div class="service-price">价格：10-50元/章 | 15-45元/全收集</div>
+                    <span class="tag">奇想星解锁</span>
+                    <a href="order.html" class="order-btn">立即下单</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-name">地图全探索</div>
+                    <div class="service-desc">传送点+宝箱+灵感露珠+奇想星全收集</div>
+                    <div class="service-price">价格：80-270元/区域 | 920-1150元/全包</div>
+                    <span class="tag">含拍照打卡</span>
+                    <a href="order.html" class="order-btn">立即下单</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-name">日常托管</div>
+                    <div class="service-desc">朝夕心愿+星海拾光+副本首通+材料采集</div>
+                    <div class="service-price">价格：1-3元/天 | 30-100元/月</div>
+                    <span class="tag">每日记录</span>
+                    <a href="order.html" class="order-btn">立即下单</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-name">活动全包</div>
+                    <div class="service-desc">天真季/泡泡季等活动，奖励全拿</div>
+                    <div class="service-price">价格：2-30元/活动 | 12-60元/全包</div>
+                    <span class="tag">限时活动</span>
+                    <a href="order.html" class="order-btn">立即下单</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-name">蓝龙等级提升</div>
+                    <div class="service-desc">1-36级等级托管，高效升级</div>
+                    <div class="service-price">价格：6-14元/级</div>
+                    <span class="tag">稳定提升</span>
+                    <a href="order.html" class="order-btn">立即下单</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-name">套装全包</div>
+                    <div class="service-desc">金蔷薇/银夜莺等套装全收集</div>
+                    <div class="service-price">价格：30-150元/套装</div>
+                    <span class="tag">全部件</span>
+                    <a href="order.html" class="order-btn">立即下单</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 鸣潮专区 -->
+        <div class="game-section">
+            <h2 class="game-title">鸣潮 | 服务明细</h2>
+            <div class="service-grid">
+                <div class="service-card">
+                    <div class="service-name">主线全通</div>
+                    <div class="service-desc">序章-第八章主线+间章，含危行任务</div>
+                    <div class="service-price">价格：10-40元/章</div>
+                    <span class="tag">含数据坞</span>
+                    <a href="order.html" class="order-btn">立即下单</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-name">区域探索全清</div>
+                    <div class="service-desc">瑝珑/北落野/今州城等区域100%探索</div>
+                    <div class="service-price">价格：35-680元/区域</div>
+                    <span class="tag">全宝箱</span>
+                    <a href="order.html" class="order-btn">立即下单</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-name">日常托管</div>
+                    <div class="service-desc">活跃+体力+周本+电台+活动托管</div>
+                    <div class="service-price">价格：2-5元/天 | 50-260元/月</div>
+                    <span class="tag">多档位</span>
+                    <a href="order.html" class="order-btn">立即下单</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-name">角色毕业养成</div>
+                    <div class="service-desc">小毕业(4暴)+大毕业(5暴)配置</div>
+                    <div class="service-price">价格：400-600元/角色</div>
+                    <span class="tag">纯手工</span>
+                    <a href="order.html" class="order-btn">立即下单</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-name">深塔全通</div>
+                    <div class="service-desc">深境区/稳定区/实验区首通+满积分</div>
+                    <div class="service-price">价格：20-180元/期</div>
+                    <span class="tag">全奖励</span>
+                    <a href="order.html" class="order-btn">立即下单</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-name">版本活动全包</div>
+                    <div class="service-desc">失序梦途/唯你的长夏等活动全清</div>
+                    <div class="service-price">价格：30-150元/活动</div>
+                    <span class="tag">限时活动</span>
+                    <a href="order.html" class="order-btn">立即下单</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 绝区零专区 -->
+        <div class="game-section">
+            <h2 class="game-title">绝区零 | 服务明细</h2>
+            <div class="service-grid">
+                <div class="service-card">
+                    <div class="service-name">主线全通</div>
+                    <div class="service-desc">序章-第五章主线+间章，含支线任务</div>
+                    <div class="service-price">价格：20-60元/章</div>
+                    <span class="tag">喵吉收集</span>
+                    <a href="order.html" class="order-btn">立即下单</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-name">地图全探索</div>
+                    <div class="service-desc">六分街/黑雁工地等区域100%探索</div>
+                    <div class="service-price">价格：25-45元/区域</div>
+                    <span class="tag">徽章收集</span>
+                    <a href="order.html" class="order-btn">立即下单</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-name">日常托管</div>
+                    <div class="service-desc">委托+体力+刮刮卡+咖啡店经营</div>
+                    <div class="service-price">价格：2-3元/天 | 50-120元/月</div>
+                    <span class="tag">稳定托管</span>
+                    <a href="order.html" class="order-btn">立即下单</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-name">零号空洞全通</div>
+                    <div class="service-desc">悬赏委托+难度全包+周奖励托管</div>
+                    <div class="service-price">价格：20-150元/服务</div>
+                    <span class="tag">全奖励</span>
+                    <a href="order.html" class="order-btn">立即下单</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-name">角色养成</div>
+                    <div class="service-desc">代理人秘闻+等级提升+装备毕业</div>
+                    <div class="service-price">价格：20-400元/角色</div>
+                    <span class="tag">纯手工</span>
+                    <a href="order.html" class="order-btn">立即下单</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-name">版本活动全包</div>
+                    <div class="service-desc">霸主的欢宴/断层之谜等活动全清</div>
+                    <div class="service-price">价格：40-150元/活动</div>
+                    <span class="tag">限时活动</span>
+                    <a href="order.html" class="order-btn">立即下单</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 服务对比工具 -->
+        <div class="compare-container">
+            <h2>热门服务对比</h2>
+            <div class="compare-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>服务类型</th>
+                            <th>日常托管（月付）</th>
+                            <th>地图全探索</th>
+                            <th>角色毕业养成</th>
+                            <th>版本活动全包</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>价格区间</td>
+                            <td style="color: var(--accent);">30-100元</td>
+                            <td style="color: var(--accent);">58-415元</td>
+                            <td style="color: var(--accent);">400-600元</td>
+                            <td style="color: var(--accent);">12-150元</td>
+                        </tr>
+                        <tr>
+                            <td>完成周期</td>
+                            <td>30天</td>
+                            <td>2-5天</td>
+                            <td>3-7天</td>
+                            <td>1-3天</td>
+                        </tr>
+                        <tr>
+                            <td>核心权益</td>
+                            <td>每日委托+体力+活动</td>
+                            <td>全宝箱+收集物+星琼</td>
+                            <td>突破+天赋+毕业装备</td>
+                            <td>限定奖励+活动任务</td>
+                        </tr>
+                        <tr>
+                            <td>适合人群</td>
+                            <td>时间少的上班族</td>
+                            <td>收集党+强迫症</td>
+                            <td>想快速成型新角色</td>
+                            <td>想拿限定奖励的玩家</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 优惠规则说明 -->
+        <div id="discount" class="discount-rule">
+            <h3>优惠活动规则</h3>
+            <ul>
+                <li>新用户首次下单，联系客服备注「新用户」立减10元（无门槛）；</li>
+                <li>同时下单2项及以上服务，享9折优惠（托管类除外）；</li>
+                <li>日常托管季付（3个月）享8折，年付享7折，长期托管更划算；</li>
+                <li>活动有效期：2025年8月-2025年12月，最终解释权归初白代肝所有。</li>
+            </ul>
+        </div>
+
+        <!-- 服务保障模块 -->
+        <div class="security-container">
+            <h2>服务保障 · 放心托付</h2>
+            <div class="security-grid">
+                <div class="security-card">
+                    <div class="security-icon">✋</div>
+                    <div class="security-title">纯手工代练</div>
+                    <div class="security-desc">拒绝脚本/外挂，纯人工操作，安全无封号风险，全程可查进度</div>
+                </div>
+                <div class="security-card">
+                    <div class="security-icon">🔒</div>
+                    <div class="security-title">账号绝对保密</div>
+                    <div class="security-desc">仅用于代练登录，完成后立即退出，绝不泄露账号信息，签署保密承诺</div>
+                </div>
+                <div class="security-card">
+                    <div class="security-icon">⏰</div>
+                    <div class="security-title">按时完成保障</div>
+                    <div class="security-desc">承诺完成周期，超时未完成按比例退款，紧急需求可加急处理（另计费）</div>
+                </div>
+                <div class="security-card">
+                    <div class="security-icon">🔄</div>
+                    <div class="security-title">售后无忧</div>
+                    <div class="security-desc">服务完成后7天内，因代练导致的问题免费修复，支持无理由部分退款（未完成项）</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 用户真实评价 -->
+        <div class="review-container">
+            <h2>用户真实评价</h2>
+            <div class="review-carousel">
+                <div class="review-card">
+                    <div class="review-header">
+                        <img src="https://via.placeholder.com/40" alt="用户头像" class="review-avatar">
+                        <div>
+                            <div class="review-user">原神玩家</div>
+                            <div class="review-rating">★★★★★</div>
+                        </div>
+                    </div>
+                    <div class="review-content">森林书全清效率超高，3天就完成了，还帮我收集了隐藏宝箱，全程有记录，特别放心！</div>
+                    <div class="review-meta">服务：须弥世界任务 | 2025-08-15</div>
+                </div>
+                <div class="review-card">
+                    <div class="review-header">
+                        <img src="https://via.placeholder.com/40" alt="用户头像" class="review-avatar">
+                        <div>
+                            <div class="review-user">星穹玩家</div>
+                            <div class="review-rating">★★★★★</div>
+                        </div>
+                    </div>
+                    <div class="review-content">忘却之庭满星太专业了，我的练度一般也帮我打通了12层，还告诉我怎么优化配队，靠谱！</div>
+                    <div class="review-meta">服务：忘却之庭满星 | 2025-08-20</div>
+                </div>
+                <div class="review-card">
+                    <div class="review-header">
+                        <img src="https://via.placeholder.com/40" alt="用户头像" class="review-avatar">
+                        <div>
+                            <div class="review-user">无限暖暖玩家</div>
+                            <div class="review-rating">★★★★★</div>
+                        </div>
+                    </div>
+                    <div class="review-content">全收集太省心了，自己找了半天的宝箱都帮我清完了，蓝龙等级也升得很快，每日托管有详细记录。</div>
+                    <div class="review-meta">服务：地图全收集+托管 | 2025-08-22</div>
+                </div>
+                <div class="review-card">
+                    <div class="review-header">
+                        <img src="https://via.placeholder.com/40" alt="用户头像" class="review-avatar">
+                        <div>
+                            <div class="review-user">鸣潮玩家</div>
+                            <div class="review-rating">★★★★★</div>
+                        </div>
+                    </div>
+                    <div class="review-content">深塔全通效率超高，原本自己卡了好久的实验区，代练1天就过了，还顺带帮我清了日常，性价比拉满。</div>
+                    <div class="review-meta">服务：深塔全通+托管 | 2025-08-25</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 用户反馈入口 -->
+        <div class="feedback-entry">
+            <div class="feedback-card">
+                <h3>您的建议是我们进步的动力</h3>
+                <p>使用过程中有任何问题或建议，欢迎反馈给我们。</p>
+                <a href="order.html#feedback" class="feedback-btn">提交反馈</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>初白代肝 - 纯手工安全代练 | 微信：wese123123 | QQ：1152995977</p>
+        <p>透明价格 · 高效服务 · 无隐形消费 · 全程可查</p>
+        <p>© 2025 初白代肝 版权所有</p>
+    </div>
+
+    <!-- 悬浮客服按钮 -->
+    <div style="position: fixed; bottom: 30px; right: 30px; z-index: 999;">
+        <button onclick="copyWechat()" style="width: 50px; height: 50px; border-radius: 50%; background: var(--primary); color: white; border: none; box-shadow: 0 2px 10px rgba(52,152,219,0.3); font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+            📞
+        </button>
+        <div style="position: absolute; bottom: 60px; right: 0; background: white; padding: 8px 12px; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); font-size: 14px; white-space: nowrap;">
+            联系客服
+        </div>
+    </div>
+
+    <script>
+        // 标签切换功能
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const gameSections = document.querySelectorAll('.game-section');
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                tabBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const tabText = btn.textContent;
+                gameSections.forEach(section => {
+                    if (tabText === '全部游戏') {
+                        section.style.display = 'block';
+                    } else {
+                        section.style.display = section.querySelector('.game-title').textContent.includes(tabText) ? 'block' : 'none';
+                    }
+                });
+            });
+        });
+
+        // 搜索功能
+        const searchInput = document.querySelector('.search-bar input');
+        searchInput.addEventListener('input', () => {
+            const searchText = searchInput.value.toLowerCase().trim();
+            if (!searchText) {
+                document.querySelectorAll('.service-card').forEach(card => card.style.display = 'block');
+                return;
+            }
+
+            document.querySelectorAll('.service-card').forEach(card => {
+                const name = card.querySelector('.service-name').textContent.toLowerCase();
+                const desc = card.querySelector('.service-desc').textContent.toLowerCase();
+                const isMatch = name.includes(searchText) || desc.includes(searchText);
+                card.style.display = isMatch ? 'block' : 'none';
+            });
+        });
+
+        // 服务筛选功能
+        function filterServices() {
+            const priceFilter = document.getElementById("priceFilter").value;
+            const serviceFilter = document.getElementById("serviceFilter").value;
+            const serviceCards = document.querySelectorAll(".service-card");
+
+            serviceCards.forEach(card => {
+                const priceText = card.querySelector(".service-price").textContent;
+                const priceMatch = priceText.match(/\d+/g);
+                const price = priceMatch ? parseFloat(priceMatch[0]) : 0;
+                const serviceName = card.querySelector(".service-name").textContent.toLowerCase();
+
+                // 价格筛选
+                let pricePass = true;
+                if (priceFilter === "low" && price >= 50) pricePass = false;
+                if (priceFilter === "mid" && (price < 50 || price > 200)) pricePass = false;
+                if (priceFilter === "high" && price <= 200) pricePass = false;
+
+                // 服务类型筛选
+                let servicePass = true;
+                if (serviceFilter !== "all") {
+                    const typeMap = {
+                        "main": ["主线"],
+                        "explore": ["探索", "收集"],
+                        "host": ["托管"],
+                        "character": ["角色", "养成", "毕业"],
+                        "activity": ["活动"]
+                    };
+                    servicePass = typeMap[serviceFilter].some(keyword => serviceName.includes(keyword));
+                }
+
+                card.style.display = pricePass && servicePass ? "block" : "none";
+            });
+        }
+
+        // 复制微信
+        function copyWechat() {
+            navigator.clipboard.writeText("wese123123").then(() => {
+                alert("客服微信已复制");
+            }).catch(err => {
+                alert("复制失败，请手动复制：wese123123");
+                console.error(err);
+            });
+        }
+    </script>
+</body>
+</html>

@@ -26,4 +26,269 @@
         .header h1 { font-size: 24px; margin-bottom: 5px; }
         .header a { color: var(--primary); text-decoration: none; }
         .container { max-width: 800px; margin: 30px auto; padding: 0 20px; }
-        .order-card { background: var(--bg-white); border-radius: 10px; padding: 30px; box-shadow: 0 2px 10px rgba(0,
+        .order-card { background: var(--bg-white); border-radius: 10px; padding: 30px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
+        .form-group { margin-bottom: 25px; }
+        .form-label { display: block; margin-bottom: 8px; font-size: 16px; font-weight: 600; color: var(--text-dark); }
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s;
+        }
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+        select.form-control {
+            appearance: none;
+            background: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") no-repeat right 15px center;
+            background-size: 16px;
+        }
+        .form-hint { font-size: 14px; color: var(--text-gray); margin-top: 5px; }
+        .btn-submit {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(to right, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 2px 5px rgba(52,152,219,0.2);
+        }
+        .btn-submit:hover {
+            background: linear-gradient(to right, var(--primary-dark), #1abc9c);
+            box-shadow: 0 6px 12px rgba(52,152,219,0.3);
+            transform: translateY(-2px);
+        }
+        .contact-info { margin-top: 30px; padding: 20px; background: #f8f9fa; border-radius: 6px; border-left: 4px solid var(--primary); }
+        .contact-info h3 { font-size: 18px; margin-bottom: 10px; color: var(--text-dark); }
+        .contact-info p { font-size: 16px; margin-bottom: 8px; }
+        .copy-btn {
+            background: var(--primary-light);
+            color: var(--primary-dark);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-left: 10px;
+            padding: 5px 10px;
+            transition: all 0.3s;
+        }
+        .copy-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+        .service-detail { margin-top: 10px; padding: 15px; background: #fafafa; border-radius: 6px; border: 1px solid #eee; }
+        .service-detail h4 { font-size: 16px; margin-bottom: 8px; color: var(--primary); }
+        .service-detail p { font-size: 14px; color: var(--text-gray); line-height: 1.6; }
+        /* 优惠提示 */
+        .discount-tip {
+            background: #fff3cd;
+            border-radius: 6px;
+            padding: 12px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--warning);
+        }
+        .discount-tip p { font-size: 14px; color: #856404; margin: 0; }
+        /* 订单查询模块 */
+        .query-module {
+            margin-top: 30px;
+            padding: 20px;
+            background: var(--bg-white);
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .query-module h3 {
+            font-size: 18px;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+        }
+        .query-module input {
+            width: 70%;
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .query-module button {
+            padding: 10px 20px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .query-module button:hover {
+            background: var(--primary-dark);
+            box-shadow: 0 6px 12px rgba(52,152,219,0.3);
+            transform: translateY(-2px);
+        }
+        .query-module p {
+            font-size: 14px;
+            color: var(--text-gray);
+            margin-top: 10px;
+        }
+        /* 反馈模块 */
+        .feedback-module {
+            margin-top: 30px;
+            padding: 20px;
+            background: var(--bg-white);
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .feedback-module h3 {
+            font-size: 18px;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+        }
+        .feedback-form .form-group {
+            margin-bottom: 15px;
+        }
+        .feedback-form label {
+            font-size: 14px;
+            color: var(--text-dark);
+        }
+        .feedback-form select,
+        .feedback-form textarea,
+        .feedback-form input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .feedback-form textarea {
+            resize: none;
+            height: 80px;
+        }
+        .feedback-form button {
+            padding: 10px 20px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .feedback-form button:hover {
+            background: var(--primary-dark);
+            box-shadow: 0 6px 12px rgba(52,152,219,0.3);
+            transform: translateY(-2px);
+        }
+        /* 滚动条美化 */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-light);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-light);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>初白代肝 - 提交订单</h1>
+        <p>填写以下信息，提交后联系客服确认 → <a href="index.html">返回首页</a></p>
+    </div>
+
+    <div class="container">
+        <div class="order-card">
+            <!-- 优惠提示 -->
+            <div class="discount-tip">
+                <p>🎁 限时优惠：新用户首单立减10元 | 两单连订9折 | 托管季付8折，联系客服备注优惠码即可享受！</p>
+            </div>
+
+            <form>
+                <!-- 选择游戏 -->
+                <div class="form-group">
+                    <label class="form-label">1. 选择游戏</label>
+                    <select class="form-control" id="gameType" onchange="showServiceOptions()">
+                        <option value="">请选择需要代练的游戏</option>
+                        <option value="genshin">原神</option>
+                        <option value="starrail">崩坏星穹铁道</option>
+                        <option value="nuanuan">无限暖暖</option>
+                        <option value="mingchao">鸣潮</option>
+                        <option value="zzz">绝区零</option>
+                    </select>
+                    <div class="form-hint">请准确选择游戏，不同游戏服务选项不同</div>
+                </div>
+
+                <!-- 选择服务类型 -->
+                <div class="form-group">
+                    <label class="form-label">2. 选择服务类型</label>
+                    <select class="form-control" id="serviceType">
+                        <option value="">请先选择游戏</option>
+                    </select>
+                    <div class="form-hint">根据需求选择对应服务，具体价格以客服报价为准</div>
+                </div>
+
+                <!-- 服务详情 -->
+                <div class="service-detail" id="serviceDetail">
+                    <h4>服务说明</h4>
+                    <p>选择游戏和服务类型后，将显示具体服务内容、完成周期及注意事项</p>
+                </div>
+
+                <!-- 账号信息 -->
+                <div class="form-group">
+                    <label class="form-label">3. 账号信息（仅用于代练，绝对保密）</label>
+                    <input type="text" class="form-control" placeholder="游戏账号（手机号/邮箱/UID）" required>
+                    <div class="form-hint">请填写正确的账号信息，方便登录代练</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">4. 联系方式</label>
+                    <input type="text" class="form-control" placeholder="你的微信/QQ（用于沟通确认）" required>
+                    <div class="form-hint">提交后客服会主动联系你，确认订单细节</div>
+                </div>
+
+                <!-- 备注信息 -->
+                <div class="form-group">
+                    <label class="form-label">5. 备注（可选）</label>
+                    <textarea class="form-control" rows="3" placeholder="请填写特殊需求（如：指定完成时间、角色信息、游戏内特殊设置等）"></textarea>
+                </div>
+
+                <button type="button" class="btn-submit" onclick="copyOrderInfo()">提交订单并复制信息</button>
+            </form>
+
+            <!-- 联系信息 -->
+            <div class="contact-info">
+                <h3>客服联系方式</h3>
+                <p>微信：<span id="wechat">wese123123</span> <button class="copy-btn" onclick="copyText('wechat')">复制</button></p>
+                <p>QQ：<span id="qq">1152995977</span> <button class="copy-btn" onclick="copyText('qq')">复制</button></p>
+            </div>
+
+            <!-- 订单查询模块 -->
+            <div id="query" class="query-module">
+                <h3>订单状态查询</h3>
+                <input type="text" placeholder="输入你的联系方式（微信/QQ）">
+                <button>查询</button>
+                <p>提交订单后1小时内更新状态，可查询进度（未开始/进行中/已完成）</p>
+            </div>
+
+            <!-- 反馈模块 -->
+            <div id="feedback" class="feedback-module">
+                <h3>用户反馈</h3>
+                <form class="feedback-form">
+                    <div class="form-group">
+                        <label>反馈类型</label>
+                       
