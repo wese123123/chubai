@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>初白代肝 - 首页</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:"Microsoft Yahei",sans-serif}
+body{background:#000;color:#fff}
+.container{width:92%;max-width:1200px;margin:0 auto}
+button{cursor:pointer}
+
+header{background:#111;position:sticky;top:0;z-index:99;border-bottom:1px solid #333}
+.nav{height:70px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:24px;font-weight:700}
+
+.banner{height:380px;background:linear-gradient(135deg,#111,#222);display:grid;place-items:center;text-align:center;padding:0 20px}
+.banner h2{font-size:34px;margin-bottom:10px}
+.banner p{color:#ccc}
+
+.search{max-width:700px;margin:30px auto}
+.search input{width:100%;padding:16px 20px;border-radius:10px;border:1px solid #444;background:#111;color:#fff;outline:none}
+
+.cate{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:20px}
+.cate button{padding:10px 18px;border-radius:8px;border:1px solid #444;background:#111;color:#fff}
+.cate .active{background:#fff;color:#000}
+
+.section{padding:30px 0}
+.title{text-align:center;margin-bottom:30px}
+.title h3{font-size:28px;margin-bottom:10px}
+.title p{color:#ccc}
+
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.card{background:#111;border:1px solid #333;border-radius:12px;padding:22px}
+.card h4{margin-bottom:8px}
+.card p{color:#ccc;font-size:13px;margin-bottom:10px}
+.price{font-weight:700;margin-bottom:12px}
+.card button{width:100%;padding:10px;background:#fff;color:#000;border:0;border-radius:8px;font-weight:700}
+
+.eval{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:20px}
+.ebox{background:#111;border:1px solid #333;padding:20px;border-radius:10px}
+.ebox p{color:#ccc}
+
+footer{text-align:center;padding:30px;color:#999;border-top:1px solid #333;margin-top:40px}
+
+@media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}.eval{grid-template-columns:1fr}}
+@media(max-width:540px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header>
+<div class="container nav">
+<div class="logo">初白代肝</div>
+<div style="color:#ccc">首页</div>
+</div>
+</header>
+
+<section class="banner">
+<div>
+<h2>初白代肝 · 纯手工安全代练</h2>
+<p>原神 / 星穹铁道 · 探索 · 深渊 · 托管 · 材料</p>
+</div>
+</section>
+
+<div class="container">
+<div class="search">
+<input id="search" placeholder="搜索：深渊、探索、托管、材料、任务...">
+</div>
+
+<div class="cate">
+<button class="active" onclick="f('all')">全部</button>
+<button onclick="f('genshin')">原神</button>
+<button onclick="f('hsr')">星穹</button>
+<button onclick="f('tuo')">托管</button>
+<button onclick="f('shen')">深渊</button>
+<button onclick="f('tan')">探索</button>
+<button onclick="f('ren')">任务</button>
+<button onclick="f('cai')">材料</button>
+</div>
+
+<div class="section">
+<div class="title"><h3>真实代肝价格表</h3><p>透明无隐形消费</p></div>
+<div class="grid" id="box">
+
+<div class="card" data-t="genshin tan"><h4>原神探索100%</h4><p>宝箱神瞳全清</p><div class="price">¥68-168</div><button onclick="go('原神探索100%')">立即下单</button></div>
+<div class="card" data-t="genshin tuo"><h4>原神每日托管</h4><p>委托+清树脂</p><div class="price">¥35/月</div><button onclick="go('原神每日托管')">立即下单</button></div>
+<div class="card" data-t="genshin shen"><h4>原神深渊满星</h4><p>螺旋12层通</p><div class="price">¥88-168</div><button onclick="go('原神深渊满星')">立即下单</button></div>
+<div class="card" data-t="genshin cai"><h4>原神角色材料</h4><p>天赋武器材料</p><div class="price">¥48-128</div><button onclick="go('原神角色材料')">立即下单</button></div>
+<div class="card" data-t="genshin ren"><h4>原神世界任务</h4><p>任务全清</p><div class="price">¥20-88</div><button onclick="go('原神世界任务')">立即下单</button></div>
+<div class="card" data-t="genshin"><h4>原神活动全包</h4><p>奖励全拿</p><div class="price">¥30-128</div><button onclick="go('原神活动全包')">立即下单</button></div>
+
+<div class="card" data-t="hsr tan"><h4>星穹探索100%</h4><p>宝箱全收集</p><div class="price">¥58-158</div><button onclick="go('星穹探索100%')">立即下单</button></div>
+<div class="card" data-t="hsr tuo"><h4>星穹日常托管</h4><p>实训+清体</p><div class="price">¥35/月</div><button onclick="go('星穹日常托管')">立即下单</button></div>
+<div class="card" data-t="hsr shen"><h4>星穹忘却满星</h4><p>混沌回忆通</p><div class="price">¥98-188</div><button onclick="go('星穹忘却满星')">立即下单</button></div>
+<div class="card" data-t="hsr ren"><h4>星穹主线支线</h4><p>任务全清</p><div class="price">¥48-128</div><button onclick="go('星穹主线支线')">立即下单</button></div>
+<div class="card" data-t="hsr"><h4>星穹模拟宇宙</h4><p>全通奖励</p><div class="price">¥58-128</div><button onclick="go('星穹模拟宇宙')">立即下单</button></div>
+<div class="card" data-t="hsr cai"><h4>星穹角色材料</h4><p>光锥材料</p><div class="price">¥48-118</div><button onclick="go('星穹角色材料')">立即下单</button></div>
+
+</div>
+</div>
+
+<div class="section">
+<div class="title"><h3>老板真实评价</h3></div>
+<div class="eval">
+<div class="ebox"><p>"效率超快，态度好，非常稳！"</p></div>
+<div class="ebox"><p>"托管一个月，每天都有记录，放心。"</p></div>
+<div class="ebox"><p>"满星打得很专业，以后长期找你。"</p></div>
+</div>
+</div>
+
+</div>
+
+<footer>
+<p>初白代肝 © 2026 纯手工代练 · 安全 · 信誉</p>
+</footer>
+
+<script>
+document.getElementById("search").oninput=function(){
+let v=this.value.toUpperCase()
+document.querySelectorAll("#box .card").forEach(i=>{
+i.style.display=i.innerText.toUpperCase().includes(v)?"":"none"})}
+
+function f(t){
+document.querySelectorAll(".cate button").forEach(i=>i.classList.remove("active"))
+event.target.classList.add("active")
+document.querySelectorAll("#box .card").forEach(i=>{
+i.style.display=(t=="all"||i.dataset.t.includes(t))?"":"none"})}
+
+function go(name){
+localStorage.setItem("orderItem",name)
+location.href="order.html"
+}
+</script>
+
+</body>
+</html>
