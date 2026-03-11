@@ -154,6 +154,7 @@
             margin: 0 auto; 
             padding: 25px 20px;
             position: relative;
+            z-index: 5; /* 确保在装饰元素上层 */
         }
         /* 搜索栏（优化样式，增强视觉） */
         .search-bar { 
@@ -186,7 +187,7 @@
             color: var(--primary-dark);
             font-size: 20px;
         }
-        /* 筛选栏（优化背景和边框，提升对比度） */
+        /* 筛选栏（修复点击问题，增加z-index） */
         .filter-bar {
             display: flex;
             flex-wrap: wrap;
@@ -197,6 +198,8 @@
             border-radius: 15px;
             box-shadow: var(--card-shadow);
             border: 2px solid var(--primary-light);
+            position: relative;
+            z-index: 10; /* 确保不被遮挡 */
         }
         .filter-bar > div {
             flex: 1;
@@ -207,6 +210,7 @@
             color: var(--text-dark);
             margin-right: 12px;
             font-weight: 600;
+            cursor: default; /* 避免标签干扰下拉框点击 */
         }
         .filter-bar select {
             padding: 10px 15px;
@@ -217,19 +221,23 @@
             transition: all 0.3s;
             color: var(--text-dark);
             min-width: 120px;
+            cursor: pointer; /* 提示可点击 */
+            z-index: 20;
         }
         .filter-bar select:focus {
             border-color: var(--primary-dark);
             box-shadow: var(--glow);
             outline: none;
         }
-        /* 游戏标签页（优化样式，增强区分度） */
+        /* 游戏标签页（修复点击问题，增加z-index） */
         .tabs { 
             display: flex; 
             flex-wrap: wrap; 
             gap: 15px; 
             margin: 0 0 35px; 
             justify-content: center;
+            position: relative;
+            z-index: 15;
         }
         .tab-btn { 
             padding: 12px 25px; 
@@ -255,7 +263,7 @@
             box-shadow: 0 4px 10px rgba(135, 206, 250, 0.3);
             transform: translateY(-2px);
         }
-        /* 游戏专区（优化标题和间距） */
+        /* 游戏专区（优化显示逻辑） */
         .game-section { 
             margin: 0 0 60px; 
             display: none;
@@ -853,188 +861,271 @@
                 </div>
             </div>
         </div>
-        <!-- 优惠规则说明（高对比度优化） -->
-        <div id="discount" class="discount-rule" style="margin-top: 60px; background: #fff8e1; border-radius: 15px; padding: 30px; border: 3px solid #ffc107; box-shadow: 0 5px 15px rgba(255,193,7,0.15);">
-            <h3 style="font-size: 26px; color: #d48806; margin-bottom: 25px; display: flex; align-items: center; font-weight: 700; text-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+        <!-- 优惠规则说明（强化视觉层级+高对比度） -->
+        <div id="discount" class="discount-rule" style="margin-top: 60px; background: linear-gradient(135deg, #fff8e1, #fff3cd); border-radius: 18px; padding: 35px; border: 3px solid #ffc107; box-shadow: 0 8px 20px rgba(255,193,7,0.2); position: relative; overflow: hidden;">
+            <div style="position: absolute; top: -20px; right: -20px; width: 120px; height: 120px; background: #ffc107; opacity: 0.1; border-radius: 50%;"></div>
+            <h3 style="font-size: 28px; color: #d48806; margin-bottom: 30px; display: flex; align-items: center; font-weight: 700; text-shadow: 0 1px 3px rgba(0,0,0,0.1); position: relative; z-index: 1;">
                 🔥 限时特惠活动 · 福利加码
             </h3>
-            <ul style="color: #333333; font-size: 18px; line-height: 2.4; padding-left: 30px; list-style: none;">
-                <li style="margin-bottom: 12px; position: relative; padding-left: 35px;">
-                    <span style="position: absolute; left: 0; top: 4px; color: #ffc107; font-size: 22px;">✅</span>
-                    新用户专享：首次下单联系客服备注「次元新客」，无门槛立减10元，所有服务通用，叠加其他优惠不冲突；
+            <ul style="color: #2d3436; font-size: 18px; line-height: 2.6; padding-left: 0; list-style: none; position: relative; z-index: 1;">
+                <li style="margin-bottom: 15px; position: relative; padding-left: 40px; display: flex; align-items: flex-start;">
+                    <span style="position: absolute; left: 0; top: 8px; color: #ffc107; font-size: 24px; font-weight: bold;">✅</span>
+                    <span>新用户专享：首次下单联系客服备注「次元新客」，无门槛立减10元，所有服务通用，叠加其他优惠不冲突；</span>
                 </li>
-                <li style="margin-bottom: 12px; position: relative; padding-left: 35px;">
-                    <span style="position: absolute; left: 0; top: 4px; color: #ffc107; font-size: 22px;">✅</span>
-                    多单折扣：同时下单2项不同服务（托管类除外）享9折，3项及以上享8.5折，5项及以上直享8折；
+                <li style="margin-bottom: 15px; position: relative; padding-left: 40px; display: flex; align-items: flex-start;">
+                    <span style="position: absolute; left: 0; top: 8px; color: #ffc107; font-size: 24px; font-weight: bold;">✅</span>
+                    <span>多单折扣：同时下单2项不同服务（托管类除外）享9折，3项及以上享8.5折，5项及以上直享8折；</span>
                 </li>
-                <li style="margin-bottom: 12px; position: relative; padding-left: 35px;">
-                    <span style="position: absolute; left: 0; top: 4px; color: #ffc107; font-size: 22px;">✅</span>
-                    长期托管福利：日常托管季付（3个月）8折、半年付7.5折、年付7折，年付用户额外赠送1次版本活动全包服务；
+                <li style="margin-bottom: 15px; position: relative; padding-left: 40px; display: flex; align-items: flex-start;">
+                    <span style="position: absolute; left: 0; top: 8px; color: #ffc107; font-size: 24px; font-weight: bold;">✅</span>
+                    <span>长期托管福利：日常托管季付（3个月）8折、半年付7.5折、年付7折，年付用户额外赠送1次版本活动全包服务；</span>
                 </li>
-                <li style="margin-bottom: 12px; position: relative; padding-left: 35px;">
-                    <span style="position: absolute; left: 0; top: 4px; color: #ffc107; font-size: 22px;">✅</span>
-                    邀请裂变：成功邀请1位好友下单，双方各得15元无门槛券；邀请3位及以上，额外赠送3天免费托管；
+                <li style="margin-bottom: 15px; position: relative; padding-left: 40px; display: flex; align-items: flex-start;">
+                    <span style="position: absolute; left: 0; top: 8px; color: #ffc107; font-size: 24px; font-weight: bold;">✅</span>
+                    <span>邀请裂变：成功邀请1位好友下单，双方各得15元无门槛券；邀请3位及以上，额外赠送3天免费托管；</span>
                 </li>
-                <li style="margin-bottom: 12px; position: relative; padding-left: 35px;">
-                    <span style="position: absolute; left: 0; top: 4px; color: #ffc107; font-size: 22px;">✅</span>
-                    老客回馈：累计下单3次及以上，自动升级为VIP用户，后续所有服务享9.5折长期优惠，优先安排代练；
+                <li style="margin-bottom: 15px; position: relative; padding-left: 40px; display: flex; align-items: flex-start;">
+                    <span style="position: absolute; left: 0; top: 8px; color: #ffc107; font-size: 24px; font-weight: bold;">✅</span>
+                    <span>老客回馈：累计下单3次及以上，自动升级为VIP用户，后续所有服务享9.5折长期优惠，优先安排代练；</span>
                 </li>
-                <li style="position: relative; padding-left: 35px;">
-                    <span style="position: absolute; left: 0; top: 4px; color: #ffc107; font-size: 22px;">📅</span>
-                    活动说明：优惠可叠加使用，长期有效，版本更新后同步新增活动，以客服最新通知为准。
+                <li style="position: relative; padding-left: 40px; display: flex; align-items: flex-start;">
+                    <span style="position: absolute; left: 0; top: 8px; color: #ffc107; font-size: 24px; font-weight: bold;">📅</span>
+                    <span>活动说明：优惠可叠加使用，长期有效，版本更新后同步新增活动，以客服最新通知为准。</span>
                 </li>
             </ul>
         </div>
 
-        <!-- 服务保障模块（卡片式高区分度设计） -->
-        <div class="security-container" id="security" style="max-width: 1200px; margin: 0 auto 70px; padding: 0 20px;">
-            <h2 style="font-size: 30px; color: #4169e1; margin-bottom: 40px; text-align: center; font-weight: 700; text-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+        <!-- 服务保障模块（卡片hover动效+高区分度） -->
+        <div class="security-container" id="security" style="max-width: 1200px; margin: 0 auto 80px; padding: 0 20px;">
+            <h2 style="font-size: 32px; color: #4169e1; margin-bottom: 45px; text-align: center; font-weight: 700; text-shadow: 0 1px 3px rgba(0,0,0,0.1);">
                 🛡️ 五大服务保障 · 全程无忧托付
             </h2>
-            <div class="security-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 35px;">
+            <div class="security-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px;">
                 <!-- 保障卡片1 -->
-                <div class="security-card" style="background: white; padding: 40px 25px; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.08); text-align: center; transition: all 0.3s ease; border-top: 5px solid #87cefa;">
-                    <div class="security-icon" style="width: 90px; height: 90px; margin: 0 auto 30px; background: #f0f8ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 40px; color: #4169e1; box-shadow: 0 0 20px rgba(135, 206, 250, 0.25);">✋</div>
-                    <div class="security-title" style="font-size: 24px; color: #222831; margin-bottom: 20px; font-weight: 600;">纯手工代练 · 安全无封</div>
-                    <div class="security-desc" style="font-size: 17px; color: #555555; line-height: 1.9; padding: 0 10px;">
+                <div class="security-card" style="background: white; padding: 45px 30px; border-radius: 18px; box-shadow: 0 8px 25px rgba(0,0,0,0.08); text-align: center; transition: all 0.4s ease; border-top: 6px solid #87cefa; position: relative; overflow: hidden;">
+                    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(135,206,250,0.05), transparent); opacity: 0; transition: opacity 0.4s ease;"></div>
+                    <div class="security-icon" style="width: 100px; height: 100px; margin: 0 auto 35px; background: #f0f8ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 45px; color: #4169e1; box-shadow: 0 0 25px rgba(135, 206, 250, 0.3); transition: all 0.4s ease;">✋</div>
+                    <div class="security-title" style="font-size: 26px; color: #222831; margin-bottom: 25px; font-weight: 600; transition: color 0.4s ease;">纯手工代练 · 安全无封</div>
+                    <div class="security-desc" style="font-size: 18px; color: #555555; line-height: 2.0; padding: 0 15px; transition: color 0.4s ease;">
                         100%真人手工操作，拒绝任何脚本、外挂辅助，严格遵循游戏规则执行，每笔订单提供实时操作截图，账号零封号风险
                     </div>
+                    <div style="position: absolute; bottom: 0; left: 0; width: 0; height: 4px; background: #4169e1; transition: width 0.4s ease;"></div>
                 </div>
                 <!-- 保障卡片2 -->
-                <div class="security-card" style="background: white; padding: 40px 25px; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.08); text-align: center; transition: all 0.3s ease; border-top: 5px solid #87cefa;">
-                    <div class="security-icon" style="width: 90px; height: 90px; margin: 0 auto 30px; background: #f0f8ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 40px; color: #4169e1; box-shadow: 0 0 20px rgba(135, 206, 250, 0.25);">🔒</div>
-                    <div class="security-title" style="font-size: 24px; color: #222831; margin-bottom: 20px; font-weight: 600;">账号加密 · 绝对保密</div>
-                    <div class="security-desc" style="font-size: 17px; color: #555555; line-height: 1.9; padding: 0 10px;">
+                <div class="security-card" style="background: white; padding: 45px 30px; border-radius: 18px; box-shadow: 0 8px 25px rgba(0,0,0,0.08); text-align: center; transition: all 0.4s ease; border-top: 6px solid #87cefa; position: relative; overflow: hidden;">
+                    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(135,206,250,0.05), transparent); opacity: 0; transition: opacity 0.4s ease;"></div>
+                    <div class="security-icon" style="width: 100px; height: 100px; margin: 0 auto 35px; background: #f0f8ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 45px; color: #4169e1; box-shadow: 0 0 25px rgba(135, 206, 250, 0.3); transition: all 0.4s ease;">🔒</div>
+                    <div class="security-title" style="font-size: 26px; color: #222831; margin-bottom: 25px; font-weight: 600; transition: color 0.4s ease;">账号加密 · 绝对保密</div>
+                    <div class="security-desc" style="font-size: 18px; color: #555555; line-height: 2.0; padding: 0 15px; transition: color 0.4s ease;">
                         账号信息仅用于代练登录，完成后立即退出并清除登录缓存，签署正规保密协议，绝不向任何第三方泄露账号相关信息
                     </div>
+                    <div style="position: absolute; bottom: 0; left: 0; width: 0; height: 4px; background: #4169e1; transition: width 0.4s ease;"></div>
                 </div>
                 <!-- 保障卡片3 -->
-                <div class="security-card" style="background: white; padding: 40px 25px; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.08); text-align: center; transition: all 0.3s ease; border-top: 5px solid #87cefa;">
-                    <div class="security-icon" style="width: 90px; height: 90px; margin: 0 auto 30px; background: #f0f8ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 40px; color: #4169e1; box-shadow: 0 0 20px rgba(135, 206, 250, 0.25);">⏰</div>
-                    <div class="security-title" style="font-size: 24px; color: #222831; margin-bottom: 20px; font-weight: 600;">按时交付 · 超时赔付</div>
-                    <div class="security-desc" style="font-size: 17px; color: #555555; line-height: 1.9; padding: 0 10px;">
+                <div class="security-card" style="background: white; padding: 45px 30px; border-radius: 18px; box-shadow: 0 8px 25px rgba(0,0,0,0.08); text-align: center; transition: all 0.4s ease; border-top: 6px solid #87cefa; position: relative; overflow: hidden;">
+                    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(135,206,250,0.05), transparent); opacity: 0; transition: opacity 0.4s ease;"></div>
+                    <div class="security-icon" style="width: 100px; height: 100px; margin: 0 auto 35px; background: #f0f8ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 45px; color: #4169e1; box-shadow: 0 0 25px rgba(135, 206, 250, 0.3); transition: all 0.4s ease;">⏰</div>
+                    <div class="security-title" style="font-size: 26px; color: #222831; margin-bottom: 25px; font-weight: 600; transition: color 0.4s ease;">按时交付 · 超时赔付</div>
+                    <div class="security-desc" style="font-size: 18px; color: #555555; line-height: 2.0; padding: 0 15px; transition: color 0.4s ease;">
                         明确承诺完成周期，超时未完成按10%/天比例赔付（最高赔付50%），紧急需求支持加急处理（仅收20%加急费，24小时内响应）
                     </div>
+                    <div style="position: absolute; bottom: 0; left: 0; width: 0; height: 4px; background: #4169e1; transition: width 0.4s ease;"></div>
                 </div>
                 <!-- 保障卡片4 -->
-                <div class="security-card" style="background: white; padding: 40px 25px; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.08); text-align: center; transition: all 0.3s ease; border-top: 5px solid #87cefa;">
-                    <div class="security-icon" style="width: 90px; height: 90px; margin: 0 auto 30px; background: #f0f8ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 40px; color: #4169e1; box-shadow: 0 0 20px rgba(135, 206, 250, 0.25);">🔄</div>
-                    <div class="security-title" style="font-size: 24px; color: #222831; margin-bottom: 20px; font-weight: 600;">售后保障 · 免费补做</div>
-                    <div class="security-desc" style="font-size: 17px; color: #555555; line-height: 1.9; padding: 0 10px;">
+                <div class="security-card" style="background: white; padding: 45px 30px; border-radius: 18px; box-shadow: 0 8px 25px rgba(0,0,0,0.08); text-align: center; transition: all 0.4s ease; border-top: 6px solid #87cefa; position: relative; overflow: hidden;">
+                    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(135,206,250,0.05), transparent); opacity: 0; transition: opacity 0.4s ease;"></div>
+                    <div class="security-icon" style="width: 100px; height: 100px; margin: 0 auto 35px; background: #f0f8ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 45px; color: #4169e1; box-shadow: 0 0 25px rgba(135, 206, 250, 0.3); transition: all 0.4s ease;">🔄</div>
+                    <div class="security-title" style="font-size: 26px; color: #222831; margin-bottom: 25px; font-weight: 600; transition: color 0.4s ease;">售后保障 · 免费补做</div>
+                    <div class="security-desc" style="font-size: 18px; color: #555555; line-height: 2.0; padding: 0 15px; transition: color 0.4s ease;">
                         服务完成后7天内，因代练操作导致的遗漏内容免费补做；未完成约定服务内容，支持无理由部分退款，客服24小时在线响应
                     </div>
+                    <div style="position: absolute; bottom: 0; left: 0; width: 0; height: 4px; background: #4169e1; transition: width 0.4s ease;"></div>
                 </div>
                 <!-- 保障卡片5 -->
-                <div class="security-card" style="background: white; padding: 40px 25px; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.08); text-align: center; transition: all 0.3s ease; border-top: 5px solid #87cefa;">
-                    <div class="security-icon" style="width: 90px; height: 90px; margin: 0 auto 30px; background: #f0f8ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 40px; color: #4169e1; box-shadow: 0 0 20px rgba(135, 206, 250, 0.25);">📊</div>
-                    <div class="security-title" style="font-size: 24px; color: #222831; margin-bottom: 20px; font-weight: 600;">进度可视化 · 实时跟踪</div>
-                    <div class="security-desc" style="font-size: 17px; color: #555555; line-height: 1.9; padding: 0 10px;">
+                <div class="security-card" style="background: white; padding: 45px 30px; border-radius: 18px; box-shadow: 0 8px 25px rgba(0,0,0,0.08); text-align: center; transition: all 0.4s ease; border-top: 6px solid #87cefa; position: relative; overflow: hidden;">
+                    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(135,206,250,0.05), transparent); opacity: 0; transition: opacity 0.4s ease;"></div>
+                    <div class="security-icon" style="width: 100px; height: 100px; margin: 0 auto 35px; background: #f0f8ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 45px; color: #4169e1; box-shadow: 0 0 25px rgba(135, 206, 250, 0.3); transition: all 0.4s ease;">📊</div>
+                    <div class="security-title" style="font-size: 26px; color: #222831; margin-bottom: 25px; font-weight: 600; transition: color 0.4s ease;">进度可视化 · 实时跟踪</div>
+                    <div class="security-desc" style="font-size: 18px; color: #555555; line-height: 2.0; padding: 0 15px; transition: color 0.4s ease;">
                         代练过程中每日同步进度截图，关键节点及时告知，支持用户随时查看操作记录，做到透明化代练，放心托付
                     </div>
+                    <div style="position: absolute; bottom: 0; left: 0; width: 0; height: 4px; background: #4169e1; transition: width 0.4s ease;"></div>
                 </div>
             </div>
         </div>
 
-        <!-- 用户真实评价（高对比度卡片设计） -->
-        <div class="review-container" id="reviews" style="max-width: 1200px; margin: 0 auto 70px; padding: 0 20px;">
-            <h2 style="font-size: 30px; color: #4169e1; margin-bottom: 40px; text-align: center; font-weight: 700; text-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+        <!-- 服务保障卡片hover动效JS（需放在该模块后） -->
+        <script>
+            document.querySelectorAll('.security-card').forEach(card => {
+                card.addEventListener('mouseover', function() {
+                    this.style.transform = 'translateY(-10px)';
+                    this.style.boxShadow = '0 15px 30px rgba(135, 206, 250, 0.2)';
+                    this.querySelector('.security-icon').style.transform = 'scale(1.1)';
+                    this.querySelector('.security-title').style.color = '#4169e1';
+                    this.querySelector('.security-desc').style.color = '#333333';
+                    this.querySelector('div[style*="background: linear-gradient"]').style.opacity = '1';
+                    this.querySelector('div[style*="height: 4px"]').style.width = '100%';
+                });
+                card.addEventListener('mouseout', function() {
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = '0 8px 25px rgba(0,0,0,0.08)';
+                    this.querySelector('.security-icon').style.transform = 'scale(1)';
+                    this.querySelector('.security-title').style.color = '#222831';
+                    this.querySelector('.security-desc').style.color = '#555555';
+                    this.querySelector('div[style*="background: linear-gradient"]').style.opacity = '0';
+                    this.querySelector('div[style*="height: 4px"]').style.width = '0';
+                });
+            });
+        </script>
+
+        <!-- 用户真实评价（轮播交互+hover效果） -->
+        <div class="review-container" id="reviews" style="max-width: 1200px; margin: 0 auto 80px; padding: 0 20px;">
+            <h2 style="font-size: 32px; color: #4169e1; margin-bottom: 45px; text-align: center; font-weight: 700; text-shadow: 0 1px 3px rgba(0,0,0,0.1);">
                 🌟 玩家真实反馈 · 口碑见证
             </h2>
-            <div class="review-carousel" style="display: flex; overflow-x: auto; gap: 35px; padding: 15px 0 30px; scrollbar-width: thin; scrollbar-color: #87cefa #f0f8ff; scroll-behavior: smooth;">
+            <!-- 轮播控制按钮 -->
+            <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 30px;">
+                <button id="prevReview" style="width: 50px; height: 50px; border-radius: 50%; background: white; border: 2px solid #87cefa; color: #4169e1; font-size: 20px; cursor: pointer; transition: all 0.3s; box-shadow: 0 3px 10px rgba(0,0,0,0.08);">←</button>
+                <button id="nextReview" style="width: 50px; height: 50px; border-radius: 50%; background: white; border: 2px solid #87cefa; color: #4169e1; font-size: 20px; cursor: pointer; transition: all 0.3s; box-shadow: 0 3px 10px rgba(0,0,0,0.08);">→</button>
+            </div>
+            <div class="review-carousel" id="reviewCarousel" style="display: flex; gap: 35px; padding: 15px 0 30px; overflow: hidden; scroll-behavior: smooth;">
                 <!-- 评价卡片1 -->
-                <div class="review-card" style="min-width: 360px; background: white; padding: 35px; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.08); border: 2px solid #f0f8ff; transition: all 0.3s ease;">
-                    <div class="review-header" style="display: flex; align-items: center; margin-bottom: 25px;">
-                        <img src="https://via.placeholder.com/70" alt="用户头像" class="review-avatar" style="width: 70px; height: 70px; border-radius: 50%; margin-right: 20px; object-fit: cover; border: 4px solid #87cefa; box-shadow: 0 0 15px rgba(135, 206, 250, 0.25);">
+                <div class="review-card" style="min-width: 360px; background: white; padding: 40px; border-radius: 18px; box-shadow: 0 8px 25px rgba(0,0,0,0.08); border: 2px solid #f0f8ff; transition: all 0.4s ease;">
+                    <div class="review-header" style="display: flex; align-items: center; margin-bottom: 30px;">
+                        <img src="https://via.placeholder.com/80" alt="用户头像" class="review-avatar" style="width: 80px; height: 80px; border-radius: 50%; margin-right: 25px; object-fit: cover; border: 4px solid #87cefa; box-shadow: 0 0 15px rgba(135, 206, 250, 0.3);">
                         <div>
-                            <div class="review-user" style="font-size: 20px; color: #222831; font-weight: 600;">原神-阿荧的旅行日记</div>
-                            <div class="review-rating" style="color: #ffd700; margin-top: 8px; font-size: 20px; letter-spacing: 2px;">★★★★★</div>
+                            <div class="review-user" style="font-size: 22px; color: #222831; font-weight: 600;">原神-阿荧的旅行日记</div>
+                            <div class="review-rating" style="color: #ffd700; margin-top: 10px; font-size: 22px; letter-spacing: 3px;">★★★★★</div>
                         </div>
                     </div>
-                    <div class="review-content" style="font-size: 17px; color: #555555; line-height: 1.9; margin-bottom: 25px; padding: 25px; background: #f8f9fa; border-radius: 12px; border-left: 4px solid #87cefa;">
+                    <div class="review-content" style="font-size: 18px; color: #555555; line-height: 2.0; margin-bottom: 30px; padding: 30px; background: #f8f9fa; border-radius: 15px; border-left: 5px solid #87cefa;">
                         第二次下单须弥森林书+沙漠书全系列，3天就肝完了所有任务！不仅清完主线支线，还帮我收集了隐藏宝箱和全部流明石，每天都会发3次进度截图，账号登录全程走正规流程，没有任何异常。新用户减10元+两单9折，性价比直接拉满，已经推荐给公会里好几个朋友～
                     </div>
-                    <div class="review-meta" style="font-size: 15px; color: #888888; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
-                        <span style="color: #666666; font-weight: 500;">服务：须弥+沙漠世界任务+地图探索</span>
-                        <span style="color: #666666; font-weight: 500;">2025-09-15</span>
+                    <div class="review-meta" style="font-size: 16px; color: #888888; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 15px;">
+                        <span style="color: #666666; font-weight: 500; background: #f0f8ff; padding: 8px 15px; border-radius: 20px;">服务：须弥+沙漠世界任务+地图探索</span>
+                        <span style="color: #666666; font-weight: 500; background: #f0f8ff; padding: 8px 15px; border-radius: 20px;">2025-09-15</span>
                     </div>
                 </div>
                 <!-- 评价卡片2 -->
-                <div class="review-card" style="min-width: 360px; background: white; padding: 35px; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.08); border: 2px solid #f0f8ff; transition: all 0.3s ease;">
-                    <div class="review-header" style="display: flex; align-items: center; margin-bottom: 25px;">
-                        <img src="https://via.placeholder.com/70" alt="用户头像" class="review-avatar" style="width: 70px; height: 70px; border-radius: 50%; margin-right: 20px; object-fit: cover; border: 4px solid #87cefa; box-shadow: 0 0 15px rgba(135, 206, 250, 0.25);">
+                <div class="review-card" style="min-width: 360px; background: white; padding: 40px; border-radius: 18px; box-shadow: 0 8px 25px rgba(0,0,0,0.08); border: 2px solid #f0f8ff; transition: all 0.4s ease;">
+                    <div class="review-header" style="display: flex; align-items: center; margin-bottom: 30px;">
+                        <img src="https://via.placeholder.com/80" alt="用户头像" class="review-avatar" style="width: 80px; height: 80px; border-radius: 50%; margin-right: 25px; object-fit: cover; border: 4px solid #87cefa; box-shadow: 0 0 15px rgba(135, 206, 250, 0.3);">
                         <div>
-                            <div class="review-user" style="font-size: 20px; color: #222831; font-weight: 600;">星穹-三月七的星轨日志</div>
-                            <div class="review-rating" style="color: #ffd700; margin-top: 8px; font-size: 20px; letter-spacing: 2px;">★★★★★</div>
+                            <div class="review-user" style="font-size: 22px; color: #222831; font-weight: 600;">星穹-三月七的星轨日志</div>
+                            <div class="review-rating" style="color: #ffd700; margin-top: 10px; font-size: 22px; letter-spacing: 3px;">★★★★★</div>
                         </div>
                     </div>
-                    <div class="review-content" style="font-size: 17px; color: #555555; line-height: 1.9; margin-bottom: 25px; padding: 25px; background: #f8f9fa; border-radius: 12px; border-left: 4px solid #87cefa;">
+                    <div class="review-content" style="font-size: 18px; color: #555555; line-height: 2.0; margin-bottom: 30px; padding: 30px; background: #f8f9fa; border-radius: 15px; border-left: 5px solid #87cefa;">
                         终于过了忘却之庭12层满星！自己卡了半个月，练度一般没想到代练1天就搞定，还贴心给了配队优化建议和遗器搭配方案。月度托管也超省心，每天实训、体力、模拟宇宙都按时完成，有详细的日报记录可查，客服回复超及时，晚上11点咨询都秒回，靠谱到离谱！
                     </div>
-                    <div class="review-meta" style="font-size: 15px; color: #888888; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
-                        <span style="color: #666666; font-weight: 500;">服务：忘却之庭满星+月度托管+模拟宇宙全通</span>
-                        <span style="color: #666666; font-weight: 500;">2025-09-18</span>
+                    <div class="review-meta" style="font-size: 16px; color: #888888; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 15px;">
+                        <span style="color: #666666; font-weight: 500; background: #f0f8ff; padding: 8px 15px; border-radius: 20px;">服务：忘却之庭满星+月度托管+模拟宇宙全通</span>
+                        <span style="color: #666666; font-weight: 500; background: #f0f8ff; padding: 8px 15px; border-radius: 20px;">2025-09-18</span>
                     </div>
                 </div>
                 <!-- 评价卡片3 -->
-                <div class="review-card" style="min-width: 360px; background: white; padding: 35px; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.08); border: 2px solid #f0f8ff; transition: all 0.3s ease;">
-                    <div class="review-header" style="display: flex; align-items: center; margin-bottom: 25px;">
-                        <img src="https://via.placeholder.com/70" alt="用户头像" class="review-avatar" style="width: 70px; height: 70px; border-radius: 50%; margin-right: 20px; object-fit: cover; border: 4px solid #87cefa; box-shadow: 0 0 15px rgba(135, 206, 250, 0.25);">
+                <div class="review-card" style="min-width: 360px; background: white; padding: 40px; border-radius: 18px; box-shadow: 0 8px 25px rgba(0,0,0,0.08); border: 2px solid #f0f8ff; transition: all 0.4s ease;">
+                    <div class="review-header" style="display: flex; align-items: center; margin-bottom: 30px;">
+                        <img src="https://via.placeholder.com/80" alt="用户头像" class="review-avatar" style="width: 80px; height: 80px; border-radius: 50%; margin-right: 25px; object-fit: cover; border: 4px solid #87cefa; box-shadow: 0 0 15px rgba(135, 206, 250, 0.3);">
                         <div>
-                            <div class="review-user" style="font-size: 20px; color: #222831; font-weight: 600;">无限暖暖-穿搭收藏家</div>
-                            <div class="review-rating" style="color: #ffd700; margin-top: 8px; font-size: 20px; letter-spacing: 2px;">★★★★★</div>
+                            <div class="review-user" style="font-size: 22px; color: #222831; font-weight: 600;">无限暖暖-穿搭收藏家</div>
+                            <div class="review-rating" style="color: #ffd700; margin-top: 10px; font-size: 22px; letter-spacing: 3px;">★★★★★</div>
                         </div>
                     </div>
-                    <div class="review-content" style="font-size: 17px; color: #555555; line-height: 1.9; margin-bottom: 25px; padding: 25px; background: #f8f9fa; border-radius: 12px; border-left: 4px solid #87cefa;">
+                    <div class="review-content" style="font-size: 18px; color: #555555; line-height: 2.0; margin-bottom: 30px; padding: 30px; background: #f8f9fa; border-radius: 15px; border-left: 5px solid #87cefa;">
                         地图全收集+蓝龙等级+金蔷薇套装一起下单，享了8.5折优惠！代练2天就清完所有区域的灵感露珠和奇想星，蓝龙从12级升到36级，套装全部件解锁，连隐藏拍照打卡点都帮我完成了。每日托管有详细日志，哪个任务没做、哪个材料收集了都写得很清楚，已经续了半年托管，还邀请了闺蜜一起下单，双方都领了15元券～
                     </div>
-                    <div class="review-meta" style="font-size: 15px; color: #888888; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
-                        <span style="color: #666666; font-weight: 500;">服务：地图全收集+蓝龙等级+套装收集+半年托管</span>
-                        <span style="color: #666666; font-weight: 500;">2025-09-20</span>
+                    <div class="review-meta" style="font-size: 16px; color: #888888; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 15px;">
+                        <span style="color: #666666; font-weight: 500; background: #f0f8ff; padding: 8px 15px; border-radius: 20px;">服务：地图全收集+蓝龙等级+套装收集+半年托管</span>
+                        <span style="color: #666666; font-weight: 500; background: #f0f8ff; padding: 8px 15px; border-radius: 20px;">2025-09-20</span>
                     </div>
                 </div>
                 <!-- 评价卡片4 -->
-                <div class="review-card" style="min-width: 360px; background: white; padding: 35px; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.08); border: 2px solid #f0f8ff; transition: all 0.3s ease;">
-                    <div class="review-header" style="display: flex; align-items: center; margin-bottom: 25px;">
-                        <img src="https://via.placeholder.com/70" alt="用户头像" class="review-avatar" style="width: 70px; height: 70px; border-radius: 50%; margin-right: 20px; object-fit: cover; border: 4px solid #87cefa; box-shadow: 0 0 15px rgba(135, 206, 250, 0.25);">
+                <div class="review-card" style="min-width: 360px; background: white; padding: 40px; border-radius: 18px; box-shadow: 0 8px 25px rgba(0,0,0,0.08); border: 2px solid #f0f8ff; transition: all 0.4s ease;">
+                    <div class="review-header" style="display: flex; align-items: center; margin-bottom: 30px;">
+                        <img src="https://via.placeholder.com/80" alt="用户头像" class="review-avatar" style="width: 80px; height: 80px; border-radius: 50%; margin-right: 25px; object-fit: cover; border: 4px solid #87cefa; box-shadow: 0 0 15px rgba(135, 206, 250, 0.3);">
                         <div>
-                            <div class="review-user" style="font-size: 20px; color: #222831; font-weight: 600;">鸣潮-逐光者</div>
-                            <div class="review-rating" style="color: #ffd700; margin-top: 8px; font-size: 20px; letter-spacing: 2px;">★★★★★</div>
+                            <div class="review-user" style="font-size: 22px; color: #222831; font-weight: 600;">鸣潮-逐光者</div>
+                            <div class="review-rating" style="color: #ffd700; margin-top: 10px; font-size: 22px; letter-spacing: 3px;">★★★★★</div>
                         </div>
                     </div>
-                    <div class="review-content" style="font-size: 17px; color: #555555; line-height: 1.9; margin-bottom: 25px; padding: 25px; background: #f8f9fa; border-radius: 12px; border-left: 4px solid #87cefa;">
+                    <div class="review-content" style="font-size: 18px; color: #555555; line-height: 2.0; margin-bottom: 30px; padding: 30px; background: #f8f9fa; border-radius: 15px; border-left: 5px solid #87cefa;">
                         深塔全通+角色大毕业+日常托管一起下单，性价比超高！实验区原本自己卡了一周，代练半天就过了，角色5暴毕业配置效果显著，打副本伤害直接翻倍。日常托管包含活动清剿，每天体力和活跃都拉满，账号安全无任何异常，中间想调整代练优先级，客服马上就安排了，售后体验拉满，已经是第三次下单了，升级成VIP还能享长期折扣～
                     </div>
-                    <div class="review-meta" style="font-size: 15px; color: #888888; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
-                        <span style="color: #666666; font-weight: 500;">服务：深塔全通+角色毕业养成+季度托管</span>
-                        <span style="color: #666666; font-weight: 500;">2025-09-22</span>
+                    <div class="review-meta" style="font-size: 16px; color: #888888; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 15px;">
+                        <span style="color: #666666; font-weight: 500; background: #f0f8ff; padding: 8px 15px; border-radius: 20px;">服务：深塔全通+角色毕业养成+季度托管</span>
+                        <span style="color: #666666; font-weight: 500; background: #f0f8ff; padding: 8px 15px; border-radius: 20px;">2025-09-22</span>
                     </div>
                 </div>
                 <!-- 评价卡片5 -->
-                <div class="review-card" style="min-width: 360px; background: white; padding: 35px; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.08); border: 2px solid #f0f8ff; transition: all 0.3s ease;">
-                    <div class="review-header" style="display: flex; align-items: center; margin-bottom: 25px;">
-                        <img src="https://via.placeholder.com/70" alt="用户头像" class="review-avatar" style="width: 70px; height: 70px; border-radius: 50%; margin-right: 20px; object-fit: cover; border: 4px solid #87cefa; box-shadow: 0 0 15px rgba(135, 206, 250, 0.25);">
+                <div class="review-card" style="min-width: 360px; background: white; padding: 40px; border-radius: 18px; box-shadow: 0 8px 25px rgba(0,0,0,0.08); border: 2px solid #f0f8ff; transition: all 0.4s ease;">
+                    <div class="review-header" style="display: flex; align-items: center; margin-bottom: 30px;">
+                        <img src="https://via.placeholder.com/80" alt="用户头像" class="review-avatar" style="width: 80px; height: 80px; border-radius: 50%; margin-right: 25px; object-fit: cover; border: 4px solid #87cefa; box-shadow: 0 0 15px rgba(135, 206, 250, 0.3);">
                         <div>
-                            <div class="review-user" style="font-size: 20px; color: #222831; font-weight: 600;">绝区零-代理人</div>
-                            <div class="review-rating" style="color: #ffd700; margin-top: 8px; font-size: 20px; letter-spacing: 2px;">★★★★★</div>
+                            <div class="review-user" style="font-size: 22px; color: #222831; font-weight: 600;">绝区零-代理人</div>
+                            <div class="review-rating" style="color: #ffd700; margin-top: 10px; font-size: 22px; letter-spacing: 3px;">★★★★★</div>
                         </div>
                     </div>
-                    <div class="review-content" style="font-size: 17px; color: #555555; line-height: 1.9; margin-bottom: 25px; padding: 25px; background: #f8f9fa; border-radius: 12px; border-left: 4px solid #87cefa;">
+                    <div class="review-content" style="font-size: 18px; color: #555555; line-height: 2.0; margin-bottom: 30px; padding: 30px; background: #f8f9fa; border-radius: 15px; border-left: 5px solid #87cefa;">
                         零号空洞全难度+版本活动+咖啡店托管一起安排，代练效率绝了！所有悬赏委托和周奖励都按时完成，咖啡店经营收益拉满，刮刮卡还帮我抽到了稀有道具。客服会提前沟通游戏内注意事项，账号登录全程走正规流程，没有异地登录提醒，活动奖励全部拿到手。邀请了3个公会好友下单，不仅领了45元券，还额外送了3天免费托管，太划算了！
                     </div>
-                    <div class="review-meta" style="font-size: 15px; color: #888888; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
-                        <span style="color: #666666; font-weight: 500;">服务：零号空洞全通+版本活动+月度托管</span>
-                        <span style="color: #666666; font-weight: 500;">2025-09-25</span>
+                    <div class="review-meta" style="font-size: 16px; color: #888888; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 15px;">
+                        <span style="color: #666666; font-weight: 500; background: #f0f8ff; padding: 8px 15px; border-radius: 20px;">服务：零号空洞全通+版本活动+月度托管</span>
+                        <span style="color: #666666; font-weight: 500; background: #f0f8ff; padding: 8px 15px; border-radius: 20px;">2025-09-25</span>
                     </div>
                 </div>
             </div>
-            <!-- 滚动提示 -->
-            <div style="text-align: center; margin-top: 20px; font-size: 16px; color: #888888;">
-                <span style="color: #4169e1; margin-right: 8px;">⟵</span> 左右滑动查看更多真实评价 <span style="color: #4169e1; margin-left: 8px;">⟶</span>
-            </div>
+            <!-- 评价卡片hover动效JS -->
+            <script>
+                document.querySelectorAll('.review-card').forEach(card => {
+                    card.addEventListener('mouseover', function() {
+                        this.style.transform = 'translateY(-8px)';
+                        this.style.boxShadow = '0 12px 25px rgba(135, 206, 250, 0.15)';
+                        this.style.borderColor = '#87cefa';
+                    });
+                    card.addEventListener('mouseout', function() {
+                        this.style.transform = 'translateY(0)';
+                        this.style.boxShadow = '0 8px 25px rgba(0,0,0,0.08)';
+                        this.style.borderColor = '#f0f8ff';
+                    });
+                });
+
+                // 评价轮播功能
+                const carousel = document.getElementById('reviewCarousel');
+                const prevBtn = document.getElementById('prevReview');
+                const nextBtn = document.getElementById('nextReview');
+                const cardWidth = 360 + 35; // 卡片宽度+间距
+
+                prevBtn.addEventListener('click', () => {
+                    carousel.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+                });
+
+                nextBtn.addEventListener('click', () => {
+                    carousel.scrollBy({ left: cardWidth, behavior: 'smooth' });
+                });
+
+                // 轮播按钮hover效果
+                prevBtn.addEventListener('mouseover', () => {
+                    prevBtn.style.background = '#f0f8ff';
+                    prevBtn.style.boxShadow = '0 5px 15px rgba(135, 206, 250, 0.2)';
+                });
+                prevBtn.addEventListener('mouseout', () => {
+                    prevBtn.style.background = 'white';
+                    prevBtn.style.boxShadow = '0 3px 10px rgba(0,0,0,0.08)';
+                });
+                nextBtn.addEventListener('mouseover', () => {
+                    nextBtn.style.background = '#f0f8ff';
+                    nextBtn.style.boxShadow = '0 5px 15px rgba(135, 206, 250, 0.2)';
+                });
+                nextBtn.addEventListener('mouseout', () => {
+                    nextBtn.style.background = 'white';
+                    nextBtn.style.boxShadow = '0 3px 10px rgba(0,0,0,0.08)';
+                });
+            </script>
         </div>
         <!-- 联系我们（优化排版和对比度） -->
         <div class="contact-container" id="contact" style="max-width: 1200px; margin: 0 auto 60px; padding: 0 20px;">
-            <h2 style="font-size: 28px; color: var(--primary-dark); margin-bottom: 35px; text-align: center; position: relative; display: inline-block; left: 50%; transform: translateX(-50%); font-weight: bold;">📞 联系我们 · 快速对接</h2>
+            <h2 style="font-size: 28px; color: #4169e1; margin-bottom: 35px; text-align: center; position: relative; display: inline-block; left: 50%; transform: translateX(-50%); font-weight: bold;">📞 联系我们 · 快速对接</h2>
             <div class="contact-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 35px;">
                 <div class="contact-card" style="background: white; padding: 35px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); text-align: center; transition: all 0.3s; border: 2px solid var(--primary-light);">
                     <div class="contact-icon" style="width: 80px; height: 80px; margin: 0 auto 25px; background: var(--primary-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 35px; color: var(--primary-dark); box-shadow: 0 0 15px rgba(135, 206, 250, 0.3);">📱</div>
@@ -1143,13 +1234,24 @@
             // 初始化页脚链接下划线动画
             document.querySelectorAll('.footer-link').forEach(link => {
                 link.addEventListener('mouseover', function() {
-                    this.style.color = var(--primary);
+                    this.style.color = 'var(--primary)';
                     this.style.borderBottom = '2px solid var(--primary)';
                 });
                 link.addEventListener('mouseout', function() {
-                    this.style.color = var(--primary-light);
+                    this.style.color = 'var(--primary-light)';
                     this.style.borderBottom = 'none';
                 });
+            });
+            // 初始化悬浮按钮提示
+            const floatBtn = document.querySelector('.float-btn');
+            const floatTooltip = document.querySelector('.float-tooltip');
+            floatBtn.addEventListener('mouseover', function() {
+                floatTooltip.style.opacity = '1';
+                floatTooltip.style.visibility = 'visible';
+            });
+            floatBtn.addEventListener('mouseout', function() {
+                floatTooltip.style.opacity = '0';
+                floatTooltip.style.visibility = 'hidden';
             });
         };
 
@@ -1171,33 +1273,33 @@
             }
         }
 
-        // 游戏标签切换
+        // 游戏标签切换（修复点击无响应问题）
         document.querySelectorAll('.tab-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                // 更新标签激活状态
+            btn.addEventListener('click', function() {
+                // 强制更新激活状态
                 document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
+                this.classList.add('active');
                 
-                const game = btn.getAttribute('data-game');
-                // 显示对应游戏专区
+                const game = this.getAttribute('data-game');
+                // 遍历所有游戏专区，控制显示/隐藏
                 document.querySelectorAll('.game-section').forEach(section => {
                     if (game === 'all') {
-                        section.classList.add('active');
+                        section.style.display = 'block';
                     } else {
-                        section.classList.toggle('active', section.getAttribute('data-game') === game);
+                        section.style.display = section.getAttribute('data-game') === game ? 'block' : 'none';
                     }
                 });
             });
         });
 
-        // 筛选服务
+        // 筛选服务（修复筛选失效问题）
         function filterServices() {
             const priceFilter = document.getElementById('priceFilter').value;
             const serviceFilter = document.getElementById('serviceFilter').value;
             const platformFilter = document.getElementById('platformFilter').value;
             
             document.querySelectorAll('.service-card').forEach(card => {
-                // 价格筛选
+                // 价格筛选逻辑
                 const priceText = card.getAttribute('data-price');
                 const priceRange = priceText.split('-').map(Number);
                 const minPrice = priceRange[0];
@@ -1208,20 +1310,20 @@
                 if (priceFilter === 'mid' && (minPrice < 50 || maxPrice > 200)) pricePass = false;
                 if (priceFilter === 'high' && minPrice <= 200) pricePass = false;
                 
-                // 服务类型筛选
+                // 服务类型筛选逻辑
                 const serviceType = card.getAttribute('data-type');
                 let servicePass = serviceFilter === 'all' || serviceType === serviceFilter;
                 
-                // 平台筛选
+                // 平台筛选逻辑
                 const platform = card.getAttribute('data-platform');
                 let platformPass = platformFilter === 'all' || platform === platformFilter;
                 
-                // 显示/隐藏卡片
+                // 控制卡片显示/隐藏
                 card.style.display = pricePass && servicePass && platformPass ? 'block' : 'none';
             });
         }
 
-        // 复制文本
+        // 复制文本功能
         function copyText(elementId) {
             const text = document.getElementById(elementId).textContent;
             navigator.clipboard.writeText(text).then(() => {
