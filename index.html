@@ -14,21 +14,29 @@
             --accent-light: #FFF5F5; /* 强调色浅背景 */
             --warning: #FFA500; /* 警告色-橙（优惠） */
             --success: #32CD32; /* 成功色-绿 */
-            --text-dark: #222831; /* 文字深 */
-            --text-gray: #6C757D; /* 文字灰 */
-            --text-light: #ADB5BD; /* 文字浅 */
+            --text-dark: #222831; /* 文字深（增强对比度） */
+            --text-gray: #555555; /* 文字灰（加深颜色） */
+            --text-light: #888888; /* 文字浅（加深颜色） */
             --bg-dark: #1A1A2E; /* 深色背景（动漫风格） */
-            --bg-light: #F8F9FA; /* 浅色背景 */
+            --bg-light: #FFFFFF; /* 浅色背景（改为纯白，提升文字对比度） */
             --border: #E9ECEF; /* 边框色 */
             --glow: 0 0 15px rgba(135, 206, 250, 0.5); /* 淡蓝光晕 */
+            --card-shadow: 0 5px 15px rgba(0,0,0,0.08); /* 卡片阴影 */
         }
         body { 
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%231A1A2E"/><circle cx="25" cy="25" r="2" fill="%2387CEFA" opacity="0.7"/><circle cx="75" cy="75" r="2" fill="%2387CEFA" opacity="0.7"/><circle cx="75" cy="25" r="2" fill="%2387CEFA" opacity="0.7"/><circle cx="25" cy="75" r="2" fill="%2387CEFA" opacity="0.7"/><path d="M50 10 L60 30 L80 35 L65 55 L70 75 L50 65 L30 75 L35 55 L20 35 L40 30 Z" fill="none" stroke="%2387CEFA" stroke-width="0.5" opacity="0.3"/></svg>');
+            /* 修复背景重合：降低背景透明度，增加白色底纹 */
+            background: 
+                linear-gradient(rgba(255,255,255,0.95), rgba(255,255,255,0.95)),
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%231A1A2E"/><circle cx="25" cy="25" r="2" fill="%2387CEFA" opacity="0.7"/><circle cx="75" cy="75" r="2" fill="%2387CEFA" opacity="0.7"/><circle cx="75" cy="25" r="2" fill="%2387CEFA" opacity="0.7"/><circle cx="25" cy="75" r="2" fill="%2387CEFA" opacity="0.7"/><path d="M50 10 L60 30 L80 35 L65 55 L70 75 L50 65 L30 75 L35 55 L20 35 L40 30 Z" fill="none" stroke="%2387CEFA" stroke-width="0.5" opacity="0.3"/></svg>');
             background-size: 200px;
             color: var(--text-dark); 
             overflow-x: hidden;
+            line-height: 1.6; /* 全局行高优化，提升可读性 */
         }
-        /* 动漫风格装饰元素 */
+        /* 动漫风格装饰元素（弱化透明度，避免干扰文字） */
+        .decor-left, .decor-right {
+            opacity: 0.2;
+        }
         .decor-left {
             position: fixed;
             left: 0;
@@ -52,53 +60,58 @@
             background: var(--primary);
             border-radius: 50%;
             animation: twinkle 3s infinite alternate;
+            opacity: 0.5; /* 弱化星星亮度，避免干扰 */
         }
         @keyframes twinkle {
             from { opacity: 0.3; transform: scale(0.8); }
-            to { opacity: 1; transform: scale(1.2); }
+            to { opacity: 0.7; transform: scale(1.2); }
         }
-        /* 头部样式 */
+        /* 头部样式（优化padding和阴影，增强层次感） */
         .header { 
             background: linear-gradient(135deg, var(--bg-dark), #2A2A40); 
             color: white; 
-            padding: 25px 0; 
+            padding: 30px 0; 
             text-align: center; 
             position: relative;
             box-shadow: var(--glow);
-            border-bottom: 2px solid var(--primary);
+            border-bottom: 3px solid var(--primary);
+            margin-bottom: 20px; /* 增加底部间距，分离头部和内容 */
         }
         .header h1 { 
-            font-size: 36px; 
-            margin-bottom: 10px; 
+            font-size: 38px; 
+            margin-bottom: 12px; 
             text-shadow: 0 0 10px var(--primary);
             font-weight: bold;
+            letter-spacing: 1px; /* 增加字间距，提升可读性 */
         }
         .header h1 span {
             color: var(--primary);
         }
         .header p { 
             font-size: 18px; 
-            opacity: 0.9; 
-            max-width: 800px; 
+            opacity: 0.95; /* 提升透明度，让文字更清晰 */
+            max-width: 900px; 
             margin: 0 auto;
-            line-height: 1.6;
+            padding: 0 20px;
         }
+        /* 导航栏（优化样式，增强交互） */
         .nav {
-            background: rgba(26, 26, 46, 0.9);
+            background: rgba(26, 26, 46, 0.95); /* 加深背景不透明度 */
             padding: 15px 0;
             position: sticky;
             top: 0;
             z-index: 999;
-            border-bottom: 1px solid var(--primary);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            border-bottom: 2px solid var(--primary);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.4);
         }
         .nav-container {
             max-width: 1200px;
             margin: 0 auto;
             display: flex;
             justify-content: center;
-            gap: 30px;
+            gap: 25px;
             flex-wrap: wrap;
+            padding: 0 10px;
         }
         .nav-btn {
             color: white;
@@ -106,10 +119,11 @@
             border: none;
             font-size: 16px;
             cursor: pointer;
-            padding: 8px 15px;
-            border-radius: 20px;
+            padding: 10px 18px;
+            border-radius: 25px;
             transition: all 0.3s;
             position: relative;
+            font-weight: 500;
         }
         .nav-btn::after {
             content: "";
@@ -124,105 +138,110 @@
         }
         .nav-btn:hover {
             color: var(--primary);
+            background: rgba(135, 206, 250, 0.15);
         }
         .nav-btn:hover::after {
             width: 80%;
         }
         .nav-btn.active {
             color: var(--primary);
-            background: rgba(135, 206, 250, 0.1);
-            box-shadow: 0 0 8px rgba(135, 206, 250, 0.3);
+            background: rgba(135, 206, 250, 0.2);
+            box-shadow: 0 0 8px rgba(135, 206, 250, 0.4);
         }
-        /* 容器样式 */
+        /* 容器样式（优化内边距和间距） */
         .container { 
             max-width: 1200px; 
             margin: 0 auto; 
-            padding: 30px 20px;
+            padding: 25px 20px;
             position: relative;
         }
-        /* 搜索栏 */
+        /* 搜索栏（优化样式，增强视觉） */
         .search-bar { 
             text-align: center; 
-            margin: 0 0 40px;
+            margin: 0 0 35px;
             position: relative;
         }
         .search-bar input {
-            width: 60%;
+            width: 65%;
             padding: 16px 25px;
-            border: 2px solid var(--primary);
+            border: 3px solid var(--primary);
             border-radius: 35px;
-            font-size: 16px;
+            font-size: 17px;
             outline: none;
             transition: all 0.3s;
-            background: rgba(255,255,255,0.9);
+            background: white;
             box-shadow: var(--glow);
+            color: var(--text-dark);
         }
         .search-bar input:focus {
-            width: 70%;
+            width: 75%;
             border-color: var(--primary-dark);
             box-shadow: 0 0 20px rgba(135, 206, 250, 0.7);
         }
         .search-icon {
             position: absolute;
-            right: 17%;
+            right: 13%;
             top: 50%;
             transform: translateY(-50%);
             color: var(--primary-dark);
-            font-size: 18px;
+            font-size: 20px;
         }
-        /* 筛选栏 */
+        /* 筛选栏（优化背景和边框，提升对比度） */
         .filter-bar {
             display: flex;
             flex-wrap: wrap;
             gap: 15px;
             margin: 0 0 30px;
             padding: 20px;
-            background: rgba(255,255,255,0.95);
+            background: white;
             border-radius: 15px;
-            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
-            border: 1px solid var(--primary-light);
+            box-shadow: var(--card-shadow);
+            border: 2px solid var(--primary-light);
         }
         .filter-bar > div {
             flex: 1;
             min-width: 180px;
         }
         .filter-bar label {
-            font-size: 15px;
+            font-size: 16px;
             color: var(--text-dark);
-            margin-right: 10px;
-            font-weight: 500;
+            margin-right: 12px;
+            font-weight: 600;
         }
         .filter-bar select {
             padding: 10px 15px;
-            border: 1px solid var(--primary);
+            border: 2px solid var(--primary);
             border-radius: 8px;
-            font-size: 15px;
+            font-size: 16px;
             background: white;
             transition: all 0.3s;
+            color: var(--text-dark);
+            min-width: 120px;
         }
         .filter-bar select:focus {
             border-color: var(--primary-dark);
-            box-shadow: 0 0 8px rgba(135, 206, 250, 0.4);
+            box-shadow: var(--glow);
             outline: none;
         }
-        /* 游戏标签页 */
+        /* 游戏标签页（优化样式，增强区分度） */
         .tabs { 
             display: flex; 
             flex-wrap: wrap; 
-            gap: 12px; 
-            margin: 0 0 30px; 
+            gap: 15px; 
+            margin: 0 0 35px; 
             justify-content: center;
         }
         .tab-btn { 
-            padding: 10px 22px; 
+            padding: 12px 25px; 
             background: white; 
             border: 2px solid var(--primary); 
-            border-radius: 25px; 
+            border-radius: 30px; 
             cursor: pointer; 
             transition: all 0.3s;
-            font-size: 15px;
+            font-size: 16px;
             color: var(--primary-dark);
-            font-weight: 500;
+            font-weight: 600;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
         .tab-btn.active { 
             background: var(--primary-dark); 
@@ -233,10 +252,10 @@
         }
         .tab-btn:hover:not(.active) {
             background: var(--primary-light);
-            box-shadow: 0 3px 8px rgba(135, 206, 250, 0.3);
+            box-shadow: 0 4px 10px rgba(135, 206, 250, 0.3);
             transform: translateY(-2px);
         }
-        /* 游戏专区 */
+        /* 游戏专区（优化标题和间距） */
         .game-section { 
             margin: 0 0 60px; 
             display: none;
@@ -250,13 +269,14 @@
             to { opacity: 1; transform: translateY(0); }
         }
         .game-title { 
-            font-size: 28px; 
+            font-size: 30px; 
             color: var(--primary-dark); 
-            margin-bottom: 25px; 
-            padding-left: 15px; 
-            border-left: 4px solid var(--primary);
+            margin-bottom: 30px; 
+            padding-left: 20px; 
+            border-left: 5px solid var(--primary);
             position: relative;
             display: inline-block;
+            font-weight: bold;
         }
         .game-title::after {
             content: "";
@@ -264,31 +284,31 @@
             bottom: -8px;
             left: 0;
             width: 100%;
-            height: 2px;
+            height: 3px;
             background: linear-gradient(90deg, var(--primary), transparent);
         }
-        /* 服务卡片网格 */
+        /* 服务卡片网格（优化间距和排版） */
         .service-grid { 
             display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
-            gap: 25px; 
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+            gap: 30px; 
         }
         .service-card {
             background: white;
             border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            padding: 28px;
+            box-shadow: var(--card-shadow);
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
-            border: 1px solid var(--primary-light);
+            border: 2px solid var(--primary-light);
         }
         .service-card::before {
             content: "";
             position: absolute;
             top: 0;
             left: 0;
-            width: 4px;
+            width: 5px;
             height: 0;
             background: linear-gradient(to bottom, var(--primary), var(--primary-dark));
             transition: height 0.3s ease;
@@ -296,76 +316,82 @@
         .service-card:hover {
             transform: translateY(-8px);
             box-shadow: 0 15px 30px rgba(135, 206, 250, 0.2);
+            border-color: var(--primary);
         }
         .service-card:hover::before {
             height: 100%;
         }
         .service-badge {
             position: absolute;
-            top: 15px;
-            right: 15px;
+            top: 18px;
+            right: 18px;
             background: var(--accent);
             color: white;
-            padding: 5px 12px;
+            padding: 6px 15px;
             border-radius: 20px;
-            font-size: 12px;
+            font-size: 13px;
             font-weight: bold;
+            box-shadow: 0 2px 5px rgba(255,107,107,0.3);
         }
         .service-name { 
-            font-size: 20px; 
+            font-size: 22px; 
             color: var(--text-dark); 
-            margin-bottom: 12px;
+            margin-bottom: 15px;
             font-weight: 600;
+            border-bottom: 1px solid var(--primary-light);
+            padding-bottom: 10px;
         }
         .service-desc { 
             color: var(--text-gray); 
-            font-size: 14px; 
-            margin-bottom: 18px;
-            line-height: 1.6;
+            font-size: 15px; 
+            margin-bottom: 20px;
+            line-height: 1.7;
         }
         .service-price {
             color: var(--accent);
-            font-size: 18px;
+            font-size: 20px;
             font-weight: bold;
-            margin-bottom: 20px;
+            margin-bottom: 22px;
             display: inline-block;
-            padding: 6px 12px;
+            padding: 8px 15px;
             background: var(--accent-light);
             border-radius: 8px;
             border: 1px solid #fee2e2;
         }
         .tag-container {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
         .tag {
             display: inline-block;
-            padding: 5px 12px;
+            padding: 6px 15px;
             background: var(--primary-light);
             color: var(--primary-dark);
             border-radius: 20px;
-            font-size: 13px;
-            margin-right: 8px;
-            margin-bottom: 8px;
+            font-size: 14px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            font-weight: 500;
         }
         .order-btn {
             display: inline-block;
             width: 100%;
-            padding: 12px 0;
+            padding: 14px 0;
             background: linear-gradient(to right, var(--primary), var(--primary-dark));
             color: white;
             text-decoration: none;
             border-radius: 30px;
-            font-size: 16px;
+            font-size: 17px;
             transition: all 0.3s;
-            box-shadow: 0 3px 10px rgba(135, 206, 250, 0.2);
+            box-shadow: 0 4px 12px rgba(135, 206, 250, 0.3);
             text-align: center;
-            font-weight: 500;
+            font-weight: 600;
             border: none;
             cursor: pointer;
+            letter-spacing: 0.5px;
         }
         .order-btn:hover {
             background: linear-gradient(to right, var(--primary-dark), #6495ED);
-            box-shadow: 0 8px 16px rgba(135, 206, 250, 0.4);
+            box-shadow: 0 8px 18px rgba(135, 206, 250, 0.5);
             transform: translateY(-3px);
         }
     </style>
@@ -395,14 +421,16 @@
         </div>
     </nav>
 
-    <!-- 优惠活动Banner -->
-    <div class="activity-banner">
-        <a href="#discount">🎉 限时优惠：新用户首单立减10元 | 两单连订9折 | 托管季付8折 | 联系客服备注优惠码即可享受！</a>
+    <!-- 优惠活动Banner（优化样式，增强视觉） -->
+    <div class="activity-banner" style="max-width: 1200px; margin: 0 auto 30px; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(255,165,0,0.2);">
+        <a href="#discount" style="display: block; background: linear-gradient(to right, var(--warning), var(--accent)); color: white; padding: 20px; text-align: center; font-size: 20px; text-decoration: none; font-weight: bold; text-shadow: 0 2px 5px rgba(0,0,0,0.2); letter-spacing: 0.5px;">
+            🎉 限时优惠：新用户首单立减10元 | 两单连订9折 | 托管季付8折 | 联系客服备注优惠码即可享受！
+        </a>
     </div>
 
     <!-- 主内容区 -->
     <main class="container" id="home">
-        <div id="services"></div> <!-- 新增服务列表锚点 -->
+        <div id="services"></div> <!-- 服务列表锚点 -->
         <!-- 搜索栏 -->
         <div class="search-bar">
             <input type="text" placeholder="搜索服务（如：原神森林书、星穹托管、暖暖全收集）">
@@ -458,71 +486,71 @@
                 <div class="service-card" data-price="15-45" data-type="main" data-platform="both">
                     <div class="service-badge">热门</div>
                     <div class="service-name">主线任务（全版本）</div>
-                    <div class="service-desc">蒙德/璃月/稻妻/须弥/枫丹/纳塔主线，含副本解锁，按幕计费</div>
+                    <div class="service-desc">覆盖蒙德/璃月/稻妻/须弥/枫丹/纳塔全版本主线，含副本解锁，按幕计费，高效完成不拖沓</div>
                     <div class="service-price">价格：15-45元/幕</div>
                     <div class="tag-container">
                         <span class="tag">版本全覆盖</span>
                         <span class="tag">纯手工</span>
                         <span class="tag">高效完成</span>
                     </div>
-                    <a href="order.html" class="order-btn" target="_self">立即下单</a> <!-- 已替换为跳转链接 -->
+                    <a href="order.html" class="order-btn" target="_self">立即下单</a>
                 </div>
                 <div class="service-card" data-price="50-240" data-type="explore" data-platform="both">
                     <div class="service-name">地图全探索</div>
-                    <div class="service-desc">宝箱/神瞳/流明石/净光翎收集，分区域报价，提供收集清单</div>
+                    <div class="service-desc">宝箱/神瞳/流明石/净光翎等100%全收集，分区域报价，提供详细收集清单，无遗漏</div>
                     <div class="service-price">价格：50-240元/区域</div>
                     <div class="tag-container">
                         <span class="tag">全收集</span>
                         <span class="tag">100%探索</span>
                         <span class="tag">无遗漏</span>
                     </div>
-                    <a href="order.html" class="order-btn" target="_self">立即下单</a> <!-- 已替换为跳转链接 -->
+                    <a href="order.html" class="order-btn" target="_self">立即下单</a>
                 </div>
                 <div class="service-card" data-price="2-100" data-type="host" data-platform="both">
                     <div class="service-badge">特惠</div>
                     <div class="service-name">日常托管</div>
-                    <div class="service-desc">委托+清体力+派遣+壶币，多档位可选，每日提供代练记录</div>
+                    <div class="service-desc">每日委托+清体力+派遣+壶币，多档位灵活选择，每日提供代练记录，放心托付</div>
                     <div class="service-price">价格：2-4元/天 | 50-100元/月</div>
                     <div class="tag-container">
                         <span class="tag">稳定高效</span>
                         <span class="tag">每日记录</span>
                         <span class="tag">灵活档位</span>
                     </div>
-                    <a href="order.html" class="order-btn" target="_self">立即下单</a> <!-- 已替换为跳转链接 -->
+                    <a href="order.html" class="order-btn" target="_self">立即下单</a>
                 </div>
                 <div class="service-card" data-price="400-600" data-type="character" data-platform="both">
                     <div class="service-name">角色毕业养成</div>
-                    <div class="service-desc">突破材料+天赋9/9/9+圣遗物毕业，纯手工操作，安全无风险</div>
+                    <div class="service-desc">突破材料+天赋9/9/9+圣遗物毕业配置，纯手工操作，安全无风险，快速成型强力角色</div>
                     <div class="service-price">价格：400-600元/角色</div>
                     <div class="tag-container">
                         <span class="tag">纯手工</span>
                         <span class="tag">毕业配置</span>
                         <span class="tag">安全保障</span>
                     </div>
-                    <a href="order.html" class="order-btn" target="_self">立即下单</a> <!-- 已替换为跳转链接 -->
+                    <a href="order.html" class="order-btn" target="_self">立即下单</a>
                 </div>
                 <div class="service-card" data-price="20-260" data-type="main" data-platform="both">
                     <div class="service-name">世界任务全清</div>
-                    <div class="service-desc">森林书/沙漠书/海洋书/花神书等系列任务，含隐藏任务</div>
+                    <div class="service-desc">森林书/沙漠书/海洋书/花神书等系列任务全清，含隐藏任务，详细记录完成进度</div>
                     <div class="service-price">价格：20-260元/系列</div>
                     <div class="tag-container">
                         <span class="tag">含隐藏任务</span>
                         <span class="tag">全系列覆盖</span>
                         <span class="tag">详细记录</span>
                     </div>
-                    <a href="order.html" class="order-btn" target="_self">立即下单</a> <!-- 已替换为跳转链接 -->
+                    <a href="order.html" class="order-btn" target="_self">立即下单</a>
                 </div>
                 <div class="service-card" data-price="5-168" data-type="activity" data-platform="both">
                     <div class="service-badge">热门</div>
                     <div class="service-name">深境螺旋满星</div>
-                    <div class="service-desc">前8层托管+9-12层满星，补星服务可选，效率保障</div>
+                    <div class="service-desc">前8层托管+9-12层满星，补星服务可选，专业配队+操作，效率保障必过</div>
                     <div class="service-price">价格：5-10元/间 | 88-168元/满星</div>
                     <div class="tag-container">
                         <span class="tag">效率保障</span>
                         <span class="tag">补星服务</span>
                         <span class="tag">专业操作</span>
                     </div>
-                    <a href="order.html" class="order-btn" target="_self">立即下单</a> <!-- 已替换为跳转链接 -->
+                    <a href="order.html" class="order-btn" target="_self">立即下单</a>
                 </div>
             </div>
         </div>
@@ -534,70 +562,70 @@
                 <div class="service-card" data-price="5-85" data-type="main" data-platform="both">
                     <div class="service-badge">热门</div>
                     <div class="service-name">主线/支线任务</div>
-                    <div class="service-desc">空间站/雅利洛/仙舟/匹诺康尼主线+支线全清，含星琼收集</div>
+                    <div class="service-desc">空间站/雅利洛/仙舟/匹诺康尼主线+支线全清，含星琼收集，快速推进剧情不卡顿</div>
                     <div class="service-price">价格：5-85元/章</div>
                     <div class="tag-container">
                         <span class="tag">含星琼</span>
                         <span class="tag">全章节覆盖</span>
                         <span class="tag">高效完成</span>
                     </div>
-                    <a href="order.html" class="order-btn" target="_self">立即下单</a> <!-- 已替换为跳转链接 -->
+                    <a href="order.html" class="order-btn" target="_self">立即下单</a>
                 </div>
                 <div class="service-card" data-price="58-415" data-type="explore" data-platform="both">
                     <div class="service-name">地图全收集</div>
-                    <div class="service-desc">宝箱/次元扑满/解谜宝箱/任务宝箱全收集，小鸟/贴纸可选</div>
+                    <div class="service-desc">宝箱/次元扑满/解谜宝箱/任务宝箱全收集，小鸟/贴纸收集可选，提供收集清单</div>
                     <div class="service-price">价格：58-415元/区域</div>
                     <div class="tag-container">
                         <span class="tag">小鸟/贴纸可选</span>
                         <span class="tag">全收集</span>
                         <span class="tag">详细清单</span>
                     </div>
-                    <a href="order.html" class="order-btn" target="_self">立即下单</a> <!-- 已替换为跳转链接 -->
+                    <a href="order.html" class="order-btn" target="_self">立即下单</a>
                 </div>
                 <div class="service-card" data-price="2-260" data-type="host" data-platform="both">
                     <div class="service-badge">特惠</div>
                     <div class="service-name">日常托管</div>
-                    <div class="service-desc">实训+清体力+模拟宇宙积分+活动托管，多档位可选</div>
+                    <div class="service-desc">每日实训+清体力+模拟宇宙积分+活动托管，多档位可选，稳定高效不缺勤</div>
                     <div class="service-price">价格：2-4元/天 | 35-260元/月</div>
                     <div class="tag-container">
                         <span class="tag">多档位</span>
                         <span class="tag">稳定高效</span>
                         <span class="tag">活动包含</span>
                     </div>
-                    <a href="order.html" class="order-btn" target="_self">立即下单</a> <!-- 已替换为跳转链接 -->
+                    <a href="order.html" class="order-btn" target="_self">立即下单</a>
                 </div>
                 <div class="service-card" data-price="15-188" data-type="activity" data-platform="both">
                     <div class="service-name">忘却之庭满星</div>
-                    <div class="service-desc">1-12层首通+满星，混沌回忆托管，稳定通关</div>
+                    <div class="service-desc">1-12层首通+满星，混沌回忆托管，专业配队+操作，稳定通关拿满奖励</div>
                     <div class="service-price">价格：15-25元/层 | 98-188元/满星</div>
                     <div class="tag-container">
                         <span class="tag">稳定通关</span>
                         <span class="tag">满星保障</span>
                         <span class="tag">专业配队</span>
                     </div>
-                    <a href="order.html" class="order-btn" target="_self">立即下单</a> <!-- 已替换为跳转链接 -->
+                    <a href="order.html" class="order-btn" target="_self">立即下单</a>
                 </div>
                 <div class="service-card" data-price="15-320" data-type="activity" data-platform="both">
                     <div class="service-name">模拟宇宙全通</div>
-                    <div class="service-desc">3-9层首通+每周积分托管+智识解锁，全奖励获取</div>
+                    <div class="service-desc">3-9层首通+每周积分托管+智识解锁，全奖励获取，无需手动操作</div>
                     <div class="service-price">价格：15-320元/服务</div>
                     <div class="tag-container">
                         <span class="tag">全奖励</span>
                         <span class="tag">智识解锁</span>
                         <span class="tag">每周托管</span>
                     </div>
-                    <a href="order.html" class="order-btn" target="_self">立即下单</a> <!-- 已替换为跳转链接 -->
+                    <a href="order.html" class="order-btn" target="_self">立即下单</a>
                 </div>
                 <div class="service-card" data-price="48-118" data-type="character" data-platform="both">
                     <div class="service-name">角色/光锥材料</div>
-                    <div class="service-desc">突破材料+光锥升级材料+遗器毕业，高效采集</div>
+                    <div class="service-desc">突破材料+光锥升级材料+遗器毕业配置，高效采集，快速提升角色强度</div>
                     <div class="service-price">价格：48-118元/套</div>
                     <div class="tag-container">
                         <span class="tag">高效采集</span>
                         <span class="tag">材料齐全</span>
                         <span class="tag">遗器毕业</span>
                     </div>
-                    <a href="order.html" class="order-btn" target="_self">立即下单</a> <!-- 已替换为跳转链接 -->
+                    <a href="order.html" class="order-btn" target="_self">立即下单</a>
                 </div>
             </div>
         </div>
@@ -608,70 +636,70 @@
                 <div class="service-card" data-price="10-50" data-type="main" data-platform="mobile">
                     <div class="service-badge">热门</div>
                     <div class="service-name">主线全通</div>
-                    <div class="service-desc">序章-第八章主线+间章，含全收集选项（奇想星+宝箱）</div>
+                    <div class="service-desc">序章-第八章主线+间章，可选全收集（奇想星+宝箱），快速推进剧情解锁内容</div>
                     <div class="service-price">价格：10-50元/章 | 15-45元/全收集</div>
                     <div class="tag-container">
                         <span class="tag">奇想星解锁</span>
                         <span class="tag">全收集可选</span>
                         <span class="tag">高效通关</span>
                     </div>
-                    <a href="order.html" class="order-btn" target="_self">立即下单</a> <!-- 已替换为跳转链接 -->
+                    <a href="order.html" class="order-btn" target="_self">立即下单</a>
                 </div>
                 <div class="service-card" data-price="80-1150" data-type="explore" data-platform="mobile">
                     <div class="service-name">地图全探索</div>
-                    <div class="service-desc">传送点+宝箱+灵感露珠+奇想星全收集，分区域报价</div>
+                    <div class="service-desc">传送点+宝箱+灵感露珠+奇想星100%全收集，分区域报价，全包更划算</div>
                     <div class="service-price">价格：80-270元/区域 | 920-1150元/全包</div>
                     <div class="tag-container">
                         <span class="tag">含拍照打卡</span>
                         <span class="tag">全收集</span>
                         <span class="tag">详细记录</span>
                     </div>
-                    <a href="order.html" class="order-btn" target="_self">立即下单</a> <!-- 已替换为跳转链接 -->
+                    <a href="order.html" class="order-btn" target="_self">立即下单</a>
                 </div>
                 <div class="service-card" data-price="1-100" data-type="host" data-platform="mobile">
                     <div class="service-badge">特惠</div>
                     <div class="service-name">日常托管</div>
-                    <div class="service-desc">朝夕心愿+星海拾光+副本首通+材料采集，每日完成记录</div>
+                    <div class="service-desc">朝夕心愿+星海拾光+副本首通+材料采集，每日完成记录，省心省力</div>
                     <div class="service-price">价格：1-3元/天 | 30-100元/月</div>
                     <div class="tag-container">
                         <span class="tag">每日记录</span>
                         <span class="tag">多档位</span>
                         <span class="tag">稳定托管</span>
                     </div>
-                    <a href="order.html" class="order-btn" target="_self">立即下单</a> <!-- 已替换为跳转链接 -->
+                    <a href="order.html" class="order-btn" target="_self">立即下单</a>
                 </div>
                 <div class="service-card" data-price="2-60" data-type="activity" data-platform="mobile">
                     <div class="service-name">活动全包</div>
-                    <div class="service-desc">天真季/泡泡季等限时活动，奖励全拿，高效完成</div>
+                    <div class="service-desc">天真季/泡泡季等限时活动，奖励全拿，高效完成不遗漏任何福利</div>
                     <div class="service-price">价格：2-30元/活动 | 12-60元/全包</div>
                     <div class="tag-container">
                         <span class="tag">限时活动</span>
                         <span class="tag">奖励全拿</span>
                         <span class="tag">高效完成</span>
                     </div>
-                    <a href="order.html" class="order-btn" target="_self">立即下单</a> <!-- 已替换为跳转链接 -->
+                    <a href="order.html" class="order-btn" target="_self">立即下单</a>
                 </div>
                 <div class="service-card" data-price="6-14" data-type="character" data-platform="mobile">
                     <div class="service-name">蓝龙等级提升</div>
-                    <div class="service-desc">1-36级等级托管，稳定高效升级，快速解锁权限</div>
+                    <div class="service-desc">1-36级等级托管，稳定高效升级，快速解锁权限和游戏内容</div>
                     <div class="service-price">价格：6-14元/级</div>
                     <div class="tag-container">
                         <span class="tag">稳定提升</span>
                         <span class="tag">高效升级</span>
                         <span class="tag">解锁权限</span>
                     </div>
-                    <a href="order.html" class="order-btn" target="_self">立即下单</a> <!-- 已替换为跳转链接 -->
+                    <a href="order.html" class="order-btn" target="_self">立即下单</a>
                 </div>
                 <div class="service-card" data-price="30-150" data-type="activity" data-platform="mobile">
                     <div class="service-name">套装全包</div>
-                    <div class="service-desc">金蔷薇/银夜莺等套装全收集，全部件解锁，快速成型</div>
+                    <div class="service-desc">金蔷薇/银夜莺等套装全收集，全部件解锁，快速打造心仪穿搭</div>
                     <div class="service-price">价格：30-150元/套装</div>
                     <div class="tag-container">
                         <span class="tag">全部件</span>
                         <span class="tag">快速成型</span>
                         <span class="tag">套装收集</span>
                     </div>
-                    <a href="order.html" class="order-btn" target="_self">立即下单</a> <!-- 已替换为跳转链接 -->
+                    <a href="order.html" class="order-btn" target="_self">立即下单</a>
                 </div>
             </div>
         </div>
@@ -683,70 +711,70 @@
                 <div class="service-card" data-price="10-40" data-type="main" data-platform="both">
                     <div class="service-badge">热门</div>
                     <div class="service-name">主线全通</div>
-                    <div class="service-desc">序章-第八章主线+间章，含危行任务，数据坞解锁</div>
+                    <div class="service-desc">序章-第八章主线+间章+危行任务，含数据坞解锁，快速推进剧情</div>
                     <div class="service-price">价格：10-40元/章</div>
                     <div class="tag-container">
                         <span class="tag">含数据坞</span>
                         <span class="tag">危行任务</span>
                         <span class="tag">高效通关</span>
                     </div>
-                    <a href="order.html" class="order-btn" target="_self">立即下单</a> <!-- 已替换为跳转链接 -->
+                    <a href="order.html" class="order-btn" target="_self">立即下单</a>
                 </div>
                 <div class="service-card" data-price="35-680" data-type="explore" data-platform="both">
                     <div class="service-name">区域探索全清</div>
-                    <div class="service-desc">瑝珑/北落野/今州城等区域100%探索，全宝箱收集</div>
+                    <div class="service-desc">瑝珑/北落野/今州城等区域100%探索，全宝箱收集，无遗漏</div>
                     <div class="service-price">价格：35-680元/区域</div>
                     <div class="tag-container">
                         <span class="tag">全宝箱</span>
                         <span class="tag">100%探索</span>
                         <span class="tag">详细清单</span>
                     </div>
-                    <a href="order.html" class="order-btn" target="_self">立即下单</a> <!-- 已替换为跳转链接 -->
+                    <a href="order.html" class="order-btn" target="_self">立即下单</a>
                 </div>
                 <div class="service-card" data-price="2-260" data-type="host" data-platform="both">
                     <div class="service-badge">特惠</div>
                     <div class="service-name">日常托管</div>
-                    <div class="service-desc">活跃+体力+周本+电台+活动托管，多档位可选</div>
+                    <div class="service-desc">每日活跃+体力+周本+电台+活动托管，多档位可选，稳定高效</div>
                     <div class="service-price">价格：2-5元/天 | 50-260元/月</div>
                     <div class="tag-container">
                         <span class="tag">多档位</span>
                         <span class="tag">活动包含</span>
                         <span class="tag">稳定高效</span>
                     </div>
-                    <a href="order.html" class="order-btn" target="_self">立即下单</a> <!-- 已替换为跳转链接 -->
+                    <a href="order.html" class="order-btn" target="_self">立即下单</a>
                 </div>
                 <div class="service-card" data-price="400-600" data-type="character" data-platform="both">
                     <div class="service-name">角色毕业养成</div>
-                    <div class="service-desc">小毕业(4暴)+大毕业(5暴)配置，纯手工养成</div>
+                    <div class="service-desc">小毕业(4暴)+大毕业(5暴)配置，纯手工养成，打造强力角色</div>
                     <div class="service-price">价格：400-600元/角色</div>
                     <div class="tag-container">
                         <span class="tag">纯手工</span>
                         <span class="tag">毕业配置</span>
                         <span class="tag">安全保障</span>
                     </div>
-                    <a href="order.html" class="order-btn" target="_self">立即下单</a> <!-- 已替换为跳转链接 -->
+                    <a href="order.html" class="order-btn" target="_self">立即下单</a>
                 </div>
                 <div class="service-card" data-price="20-180" data-type="activity" data-platform="both">
                     <div class="service-name">深塔全通</div>
-                    <div class="service-desc">深境区/稳定区/实验区首通+满积分，全奖励获取</div>
+                    <div class="service-desc">深境区/稳定区/实验区首通+满积分，全奖励获取，专业操作</div>
                     <div class="service-price">价格：20-180元/期</div>
                     <div class="tag-container">
                         <span class="tag">全奖励</span>
                         <span class="tag">满积分</span>
                         <span class="tag">稳定通关</span>
                     </div>
-                    <a href="order.html" class="order-btn" target="_self">立即下单</a> <!-- 已替换为跳转链接 -->
+                    <a href="order.html" class="order-btn" target="_self">立即下单</a>
                 </div>
                 <div class="service-card" data-price="30-150" data-type="activity" data-platform="both">
                     <div class="service-name">版本活动全包</div>
-                    <div class="service-desc">失序梦途/唯你的长夏等活动全清，奖励全拿</div>
+                    <div class="service-desc">失序梦途/唯你的长夏等活动全清，奖励全拿，高效完成</div>
                     <div class="service-price">价格：30-150元/活动</div>
                     <div class="tag-container">
                         <span class="tag">限时活动</span>
                         <span class="tag">奖励全拿</span>
                         <span class="tag">高效完成</span>
                     </div>
-                    <a href="order.html" class="order-btn" target="_self">立即下单</a> <!-- 已替换为跳转链接 -->
+                    <a href="order.html" class="order-btn" target="_self">立即下单</a>
                 </div>
             </div>
         </div>
@@ -758,236 +786,294 @@
                 <div class="service-card" data-price="20-60" data-type="main" data-platform="both">
                     <div class="service-badge">热门</div>
                     <div class="service-name">主线全通</div>
-                    <div class="service-desc">序章-第五章主线+间章，含支线任务，喵吉收集</div>
+                    <div class="service-desc">序章-第五章主线+间章+支线，含喵吉收集，快速推进剧情解锁内容</div>
                     <div class="service-price">价格：20-60元/章</div>
                     <div class="tag-container">
                         <span class="tag">喵吉收集</span>
                         <span class="tag">支线包含</span>
                         <span class="tag">高效通关</span>
                     </div>
-                    <a href="order.html" class="order-btn" target="_self">立即下单</a> <!-- 已替换为跳转链接 -->
+                    <a href="order.html" class="order-btn" target="_self">立即下单</a>
                 </div>
                 <div class="service-card" data-price="25-45" data-type="explore" data-platform="both">
                     <div class="service-name">地图全探索</div>
-                    <div class="service-desc">六分街/黑雁工地等区域100%探索，徽章收集</div>
+                    <div class="service-desc">六分街/黑雁工地等区域100%探索，徽章收集，无遗漏</div>
                     <div class="service-price">价格：25-45元/区域</div>
                     <div class="tag-container">
                         <span class="tag">徽章收集</span>
                         <span class="tag">100%探索</span>
                         <span class="tag">详细记录</span>
                     </div>
-                    <a href="order.html" class="order-btn" target="_self">立即下单</a> <!-- 已替换为跳转链接 -->
+                    <a href="order.html" class="order-btn" target="_self">立即下单</a>
                 </div>
                 <div class="service-card" data-price="2-120" data-type="host" data-platform="both">
                     <div class="service-badge">特惠</div>
                     <div class="service-name">日常托管</div>
-                    <div class="service-desc">委托+体力+刮刮卡+咖啡店经营，稳定托管</div>
+                    <div class="service-desc">每日委托+体力+刮刮卡+咖啡店经营，稳定托管，省心省力</div>
                     <div class="service-price">价格：2-3元/天 | 50-120元/月</div>
                     <div class="tag-container">
                         <span class="tag">稳定托管</span>
                         <span class="tag">多内容包含</span>
                         <span class="tag">每日记录</span>
                     </div>
-                    <a href="order.html" class="order-btn" target="_self">立即下单</a> <!-- 已替换为跳转链接 -->
+                    <a href="order.html" class="order-btn" target="_self">立即下单</a>
                 </div>
                 <div class="service-card" data-price="20-150" data-type="activity" data-platform="both">
                     <div class="service-name">零号空洞全通</div>
-                    <div class="service-desc">悬赏委托+难度全包+周奖励托管，稳定通关</div>
+                    <div class="service-desc">悬赏委托+难度全包+周奖励托管，稳定通关，全奖励获取</div>
                     <div class="service-price">价格：20-150元/服务</div>
                     <div class="tag-container">
                         <span class="tag">全奖励</span>
                         <span class="tag">难度全包</span>
                         <span class="tag">周奖励托管</span>
                     </div>
-                    <a href="order.html" class="order-btn" target="_self">立即下单</a> <!-- 已替换为跳转链接 -->
+                    <a href="order.html" class="order-btn" target="_self">立即下单</a>
                 </div>
                 <div class="service-card" data-price="20-400" data-type="character" data-platform="both">
                     <div class="service-name">角色养成</div>
-                    <div class="service-desc">代理人秘闻+等级提升+装备毕业，纯手工操作</div>
+                    <div class="service-desc">代理人秘闻+等级提升+装备毕业，纯手工操作，快速成型</div>
                     <div class="service-price">价格：20-400元/角色</div>
                     <div class="tag-container">
                         <span class="tag">纯手工</span>
                         <span class="tag">装备毕业</span>
                         <span class="tag">等级提升</span>
                     </div>
-                    <a href="order.html" class="order-btn" target="_self">立即下单</a> <!-- 已替换为跳转链接 -->
+                    <a href="order.html" class="order-btn" target="_self">立即下单</a>
                 </div>
                 <div class="service-card" data-price="40-150" data-type="activity" data-platform="both">
                     <div class="service-name">版本活动全包</div>
-                    <div class="service-desc">霸主的欢宴/断层之谜等活动全清，奖励全拿</div>
+                    <div class="service-desc">霸主的欢宴/断层之谜等活动全清，奖励全拿，高效完成</div>
                     <div class="service-price">价格：40-150元/活动</div>
                     <div class="tag-container">
                         <span class="tag">限时活动</span>
                         <span class="tag">奖励全拿</span>
                         <span class="tag">高效完成</span>
                     </div>
-                    <a href="order.html" class="order-btn" target="_self">立即下单</a> <!-- 已替换为跳转链接 -->
+                    <a href="order.html" class="order-btn" target="_self">立即下单</a>
                 </div>
             </div>
         </div>
-        <!-- 优惠规则说明 -->
-        <div id="discount" class="discount-rule" style="margin-top: 60px;">
-            <h3>🔥 限时特惠活动 · 福利加码</h3>
-            <ul>
-                <li>✅ 新用户专享：首次下单联系客服备注「次元新客」，无门槛立减10元，所有服务通用，叠加其他优惠不冲突；</li>
-                <li>✅ 多单折扣：同时下单2项不同服务（托管类除外）享9折，3项及以上享8.5折，5项及以上直享8折；</li>
-                <li>✅ 长期托管福利：日常托管季付（3个月）8折、半年付7.5折、年付7折，年付用户额外赠送1次版本活动全包服务；</li>
-                <li>✅ 邀请裂变：成功邀请1位好友下单，双方各得15元无门槛券；邀请3位及以上，额外赠送3天免费托管；</li>
-                <li>✅ 老客回馈：累计下单3次及以上，自动升级为VIP用户，后续所有服务享9.5折长期优惠，优先安排代练；</li>
-                <li>📅 活动说明：优惠可叠加使用，长期有效，版本更新后同步新增活动，以客服最新通知为准。</li>
+        <!-- 优惠规则说明（高对比度优化） -->
+        <div id="discount" class="discount-rule" style="margin-top: 60px; background: #fff8e1; border-radius: 15px; padding: 30px; border: 3px solid #ffc107; box-shadow: 0 5px 15px rgba(255,193,7,0.15);">
+            <h3 style="font-size: 26px; color: #d48806; margin-bottom: 25px; display: flex; align-items: center; font-weight: 700; text-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                🔥 限时特惠活动 · 福利加码
+            </h3>
+            <ul style="color: #333333; font-size: 18px; line-height: 2.4; padding-left: 30px; list-style: none;">
+                <li style="margin-bottom: 12px; position: relative; padding-left: 35px;">
+                    <span style="position: absolute; left: 0; top: 4px; color: #ffc107; font-size: 22px;">✅</span>
+                    新用户专享：首次下单联系客服备注「次元新客」，无门槛立减10元，所有服务通用，叠加其他优惠不冲突；
+                </li>
+                <li style="margin-bottom: 12px; position: relative; padding-left: 35px;">
+                    <span style="position: absolute; left: 0; top: 4px; color: #ffc107; font-size: 22px;">✅</span>
+                    多单折扣：同时下单2项不同服务（托管类除外）享9折，3项及以上享8.5折，5项及以上直享8折；
+                </li>
+                <li style="margin-bottom: 12px; position: relative; padding-left: 35px;">
+                    <span style="position: absolute; left: 0; top: 4px; color: #ffc107; font-size: 22px;">✅</span>
+                    长期托管福利：日常托管季付（3个月）8折、半年付7.5折、年付7折，年付用户额外赠送1次版本活动全包服务；
+                </li>
+                <li style="margin-bottom: 12px; position: relative; padding-left: 35px;">
+                    <span style="position: absolute; left: 0; top: 4px; color: #ffc107; font-size: 22px;">✅</span>
+                    邀请裂变：成功邀请1位好友下单，双方各得15元无门槛券；邀请3位及以上，额外赠送3天免费托管；
+                </li>
+                <li style="margin-bottom: 12px; position: relative; padding-left: 35px;">
+                    <span style="position: absolute; left: 0; top: 4px; color: #ffc107; font-size: 22px;">✅</span>
+                    老客回馈：累计下单3次及以上，自动升级为VIP用户，后续所有服务享9.5折长期优惠，优先安排代练；
+                </li>
+                <li style="position: relative; padding-left: 35px;">
+                    <span style="position: absolute; left: 0; top: 4px; color: #ffc107; font-size: 22px;">📅</span>
+                    活动说明：优惠可叠加使用，长期有效，版本更新后同步新增活动，以客服最新通知为准。
+                </li>
             </ul>
         </div>
 
-        <!-- 服务保障模块 -->
-        <div class="security-container" id="security">
-            <h2>🛡️ 五大服务保障 · 全程无忧托付</h2>
-            <div class="security-grid">
-                <div class="security-card">
-                    <div class="security-icon">✋</div>
-                    <div class="security-title">纯手工代练 · 安全无封</div>
-                    <div class="security-desc">100%真人手工操作，拒绝任何脚本、外挂辅助，严格遵循游戏规则执行，每笔订单提供实时操作截图，账号零封号风险</div>
+        <!-- 服务保障模块（卡片式高区分度设计） -->
+        <div class="security-container" id="security" style="max-width: 1200px; margin: 0 auto 70px; padding: 0 20px;">
+            <h2 style="font-size: 30px; color: #4169e1; margin-bottom: 40px; text-align: center; font-weight: 700; text-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                🛡️ 五大服务保障 · 全程无忧托付
+            </h2>
+            <div class="security-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 35px;">
+                <!-- 保障卡片1 -->
+                <div class="security-card" style="background: white; padding: 40px 25px; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.08); text-align: center; transition: all 0.3s ease; border-top: 5px solid #87cefa;">
+                    <div class="security-icon" style="width: 90px; height: 90px; margin: 0 auto 30px; background: #f0f8ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 40px; color: #4169e1; box-shadow: 0 0 20px rgba(135, 206, 250, 0.25);">✋</div>
+                    <div class="security-title" style="font-size: 24px; color: #222831; margin-bottom: 20px; font-weight: 600;">纯手工代练 · 安全无封</div>
+                    <div class="security-desc" style="font-size: 17px; color: #555555; line-height: 1.9; padding: 0 10px;">
+                        100%真人手工操作，拒绝任何脚本、外挂辅助，严格遵循游戏规则执行，每笔订单提供实时操作截图，账号零封号风险
+                    </div>
                 </div>
-                <div class="security-card">
-                    <div class="security-icon">🔒</div>
-                    <div class="security-title">账号加密 · 绝对保密</div>
-                    <div class="security-desc">账号信息仅用于代练登录，完成后立即退出并清除登录缓存，签署正规保密协议，绝不向任何第三方泄露账号相关信息</div>
+                <!-- 保障卡片2 -->
+                <div class="security-card" style="background: white; padding: 40px 25px; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.08); text-align: center; transition: all 0.3s ease; border-top: 5px solid #87cefa;">
+                    <div class="security-icon" style="width: 90px; height: 90px; margin: 0 auto 30px; background: #f0f8ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 40px; color: #4169e1; box-shadow: 0 0 20px rgba(135, 206, 250, 0.25);">🔒</div>
+                    <div class="security-title" style="font-size: 24px; color: #222831; margin-bottom: 20px; font-weight: 600;">账号加密 · 绝对保密</div>
+                    <div class="security-desc" style="font-size: 17px; color: #555555; line-height: 1.9; padding: 0 10px;">
+                        账号信息仅用于代练登录，完成后立即退出并清除登录缓存，签署正规保密协议，绝不向任何第三方泄露账号相关信息
+                    </div>
                 </div>
-                <div class="security-card">
-                    <div class="security-icon">⏰</div>
-                    <div class="security-title">按时交付 · 超时赔付</div>
-                    <div class="security-desc">明确承诺完成周期，超时未完成按10%/天比例赔付（最高赔付50%），紧急需求支持加急处理（仅收20%加急费，24小时内响应）</div>
+                <!-- 保障卡片3 -->
+                <div class="security-card" style="background: white; padding: 40px 25px; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.08); text-align: center; transition: all 0.3s ease; border-top: 5px solid #87cefa;">
+                    <div class="security-icon" style="width: 90px; height: 90px; margin: 0 auto 30px; background: #f0f8ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 40px; color: #4169e1; box-shadow: 0 0 20px rgba(135, 206, 250, 0.25);">⏰</div>
+                    <div class="security-title" style="font-size: 24px; color: #222831; margin-bottom: 20px; font-weight: 600;">按时交付 · 超时赔付</div>
+                    <div class="security-desc" style="font-size: 17px; color: #555555; line-height: 1.9; padding: 0 10px;">
+                        明确承诺完成周期，超时未完成按10%/天比例赔付（最高赔付50%），紧急需求支持加急处理（仅收20%加急费，24小时内响应）
+                    </div>
                 </div>
-                <div class="security-card">
-                    <div class="security-icon">🔄</div>
-                    <div class="security-title">售后保障 · 免费补做</div>
-                    <div class="security-desc">服务完成后7天内，因代练操作导致的遗漏内容免费补做；未完成约定服务内容，支持无理由部分退款，客服24小时在线响应</div>
+                <!-- 保障卡片4 -->
+                <div class="security-card" style="background: white; padding: 40px 25px; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.08); text-align: center; transition: all 0.3s ease; border-top: 5px solid #87cefa;">
+                    <div class="security-icon" style="width: 90px; height: 90px; margin: 0 auto 30px; background: #f0f8ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 40px; color: #4169e1; box-shadow: 0 0 20px rgba(135, 206, 250, 0.25);">🔄</div>
+                    <div class="security-title" style="font-size: 24px; color: #222831; margin-bottom: 20px; font-weight: 600;">售后保障 · 免费补做</div>
+                    <div class="security-desc" style="font-size: 17px; color: #555555; line-height: 1.9; padding: 0 10px;">
+                        服务完成后7天内，因代练操作导致的遗漏内容免费补做；未完成约定服务内容，支持无理由部分退款，客服24小时在线响应
+                    </div>
                 </div>
-                <div class="security-card">
-                    <div class="security-icon">📊</div>
-                    <div class="security-title">进度可视化 · 实时跟踪</div>
-                    <div class="security-desc">代练过程中每日同步进度截图，关键节点及时告知，支持用户随时查看操作记录，做到透明化代练，放心托付</div>
+                <!-- 保障卡片5 -->
+                <div class="security-card" style="background: white; padding: 40px 25px; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.08); text-align: center; transition: all 0.3s ease; border-top: 5px solid #87cefa;">
+                    <div class="security-icon" style="width: 90px; height: 90px; margin: 0 auto 30px; background: #f0f8ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 40px; color: #4169e1; box-shadow: 0 0 20px rgba(135, 206, 250, 0.25);">📊</div>
+                    <div class="security-title" style="font-size: 24px; color: #222831; margin-bottom: 20px; font-weight: 600;">进度可视化 · 实时跟踪</div>
+                    <div class="security-desc" style="font-size: 17px; color: #555555; line-height: 1.9; padding: 0 10px;">
+                        代练过程中每日同步进度截图，关键节点及时告知，支持用户随时查看操作记录，做到透明化代练，放心托付
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- 用户真实评价 -->
-        <div class="review-container" id="reviews">
-            <h2>🌟 玩家真实反馈 · 口碑见证</h2>
-            <div class="review-carousel">
-                <div class="review-card">
-                    <div class="review-header">
-                        <img src="https://via.placeholder.com/50" alt="用户头像" class="review-avatar">
+        <!-- 用户真实评价（高对比度卡片设计） -->
+        <div class="review-container" id="reviews" style="max-width: 1200px; margin: 0 auto 70px; padding: 0 20px;">
+            <h2 style="font-size: 30px; color: #4169e1; margin-bottom: 40px; text-align: center; font-weight: 700; text-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                🌟 玩家真实反馈 · 口碑见证
+            </h2>
+            <div class="review-carousel" style="display: flex; overflow-x: auto; gap: 35px; padding: 15px 0 30px; scrollbar-width: thin; scrollbar-color: #87cefa #f0f8ff; scroll-behavior: smooth;">
+                <!-- 评价卡片1 -->
+                <div class="review-card" style="min-width: 360px; background: white; padding: 35px; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.08); border: 2px solid #f0f8ff; transition: all 0.3s ease;">
+                    <div class="review-header" style="display: flex; align-items: center; margin-bottom: 25px;">
+                        <img src="https://via.placeholder.com/70" alt="用户头像" class="review-avatar" style="width: 70px; height: 70px; border-radius: 50%; margin-right: 20px; object-fit: cover; border: 4px solid #87cefa; box-shadow: 0 0 15px rgba(135, 206, 250, 0.25);">
                         <div>
-                            <div class="review-user">原神-阿荧的旅行日记</div>
-                            <div class="review-rating">★★★★★</div>
+                            <div class="review-user" style="font-size: 20px; color: #222831; font-weight: 600;">原神-阿荧的旅行日记</div>
+                            <div class="review-rating" style="color: #ffd700; margin-top: 8px; font-size: 20px; letter-spacing: 2px;">★★★★★</div>
                         </div>
                     </div>
-                    <div class="review-content">第二次下单须弥森林书+沙漠书全系列，3天就肝完了所有任务！不仅清完主线支线，还帮我收集了隐藏宝箱和全部流明石，每天都会发3次进度截图，账号登录全程走正规流程，没有任何异常。新用户减10元+两单9折，性价比直接拉满，已经推荐给公会里好几个朋友～</div>
-                    <div class="review-meta">
-                        <span>服务：须弥+沙漠世界任务+地图探索</span>
-                        <span>2025-09-15</span>
+                    <div class="review-content" style="font-size: 17px; color: #555555; line-height: 1.9; margin-bottom: 25px; padding: 25px; background: #f8f9fa; border-radius: 12px; border-left: 4px solid #87cefa;">
+                        第二次下单须弥森林书+沙漠书全系列，3天就肝完了所有任务！不仅清完主线支线，还帮我收集了隐藏宝箱和全部流明石，每天都会发3次进度截图，账号登录全程走正规流程，没有任何异常。新用户减10元+两单9折，性价比直接拉满，已经推荐给公会里好几个朋友～
+                    </div>
+                    <div class="review-meta" style="font-size: 15px; color: #888888; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+                        <span style="color: #666666; font-weight: 500;">服务：须弥+沙漠世界任务+地图探索</span>
+                        <span style="color: #666666; font-weight: 500;">2025-09-15</span>
                     </div>
                 </div>
-                <div class="review-card">
-                    <div class="review-header">
-                        <img src="https://via.placeholder.com/50" alt="用户头像" class="review-avatar">
+                <!-- 评价卡片2 -->
+                <div class="review-card" style="min-width: 360px; background: white; padding: 35px; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.08); border: 2px solid #f0f8ff; transition: all 0.3s ease;">
+                    <div class="review-header" style="display: flex; align-items: center; margin-bottom: 25px;">
+                        <img src="https://via.placeholder.com/70" alt="用户头像" class="review-avatar" style="width: 70px; height: 70px; border-radius: 50%; margin-right: 20px; object-fit: cover; border: 4px solid #87cefa; box-shadow: 0 0 15px rgba(135, 206, 250, 0.25);">
                         <div>
-                            <div class="review-user">星穹-三月七的星轨日志</div>
-                            <div class="review-rating">★★★★★</div>
+                            <div class="review-user" style="font-size: 20px; color: #222831; font-weight: 600;">星穹-三月七的星轨日志</div>
+                            <div class="review-rating" style="color: #ffd700; margin-top: 8px; font-size: 20px; letter-spacing: 2px;">★★★★★</div>
                         </div>
                     </div>
-                    <div class="review-content">终于过了忘却之庭12层满星！自己卡了半个月，练度一般没想到代练1天就搞定，还贴心给了配队优化建议和遗器搭配方案。月度托管也超省心，每天实训、体力、模拟宇宙都按时完成，有详细的日报记录可查，客服回复超及时，晚上11点咨询都秒回，靠谱到离谱！</div>
-                    <div class="review-meta">
-                        <span>服务：忘却之庭满星+月度托管+模拟宇宙全通</span>
-                        <span>2025-09-18</span>
+                    <div class="review-content" style="font-size: 17px; color: #555555; line-height: 1.9; margin-bottom: 25px; padding: 25px; background: #f8f9fa; border-radius: 12px; border-left: 4px solid #87cefa;">
+                        终于过了忘却之庭12层满星！自己卡了半个月，练度一般没想到代练1天就搞定，还贴心给了配队优化建议和遗器搭配方案。月度托管也超省心，每天实训、体力、模拟宇宙都按时完成，有详细的日报记录可查，客服回复超及时，晚上11点咨询都秒回，靠谱到离谱！
+                    </div>
+                    <div class="review-meta" style="font-size: 15px; color: #888888; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+                        <span style="color: #666666; font-weight: 500;">服务：忘却之庭满星+月度托管+模拟宇宙全通</span>
+                        <span style="color: #666666; font-weight: 500;">2025-09-18</span>
                     </div>
                 </div>
-                <div class="review-card">
-                    <div class="review-header">
-                        <img src="https://via.placeholder.com/50" alt="用户头像" class="review-avatar">
+                <!-- 评价卡片3 -->
+                <div class="review-card" style="min-width: 360px; background: white; padding: 35px; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.08); border: 2px solid #f0f8ff; transition: all 0.3s ease;">
+                    <div class="review-header" style="display: flex; align-items: center; margin-bottom: 25px;">
+                        <img src="https://via.placeholder.com/70" alt="用户头像" class="review-avatar" style="width: 70px; height: 70px; border-radius: 50%; margin-right: 20px; object-fit: cover; border: 4px solid #87cefa; box-shadow: 0 0 15px rgba(135, 206, 250, 0.25);">
                         <div>
-                            <div class="review-user">无限暖暖-穿搭收藏家</div>
-                            <div class="review-rating">★★★★★</div>
+                            <div class="review-user" style="font-size: 20px; color: #222831; font-weight: 600;">无限暖暖-穿搭收藏家</div>
+                            <div class="review-rating" style="color: #ffd700; margin-top: 8px; font-size: 20px; letter-spacing: 2px;">★★★★★</div>
                         </div>
                     </div>
-                    <div class="review-content">地图全收集+蓝龙等级+金蔷薇套装一起下单，享了8.5折优惠！代练2天就清完所有区域的灵感露珠和奇想星，蓝龙从12级升到36级，套装全部件解锁，连隐藏拍照打卡点都帮我完成了。每日托管有详细日志，哪个任务没做、哪个材料收集了都写得很清楚，已经续了半年托管，还邀请了闺蜜一起下单，双方都领了15元券～</div>
-                    <div class="review-meta">
-                        <span>服务：地图全收集+蓝龙等级+套装收集+半年托管</span>
-                        <span>2025-09-20</span>
+                    <div class="review-content" style="font-size: 17px; color: #555555; line-height: 1.9; margin-bottom: 25px; padding: 25px; background: #f8f9fa; border-radius: 12px; border-left: 4px solid #87cefa;">
+                        地图全收集+蓝龙等级+金蔷薇套装一起下单，享了8.5折优惠！代练2天就清完所有区域的灵感露珠和奇想星，蓝龙从12级升到36级，套装全部件解锁，连隐藏拍照打卡点都帮我完成了。每日托管有详细日志，哪个任务没做、哪个材料收集了都写得很清楚，已经续了半年托管，还邀请了闺蜜一起下单，双方都领了15元券～
+                    </div>
+                    <div class="review-meta" style="font-size: 15px; color: #888888; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+                        <span style="color: #666666; font-weight: 500;">服务：地图全收集+蓝龙等级+套装收集+半年托管</span>
+                        <span style="color: #666666; font-weight: 500;">2025-09-20</span>
                     </div>
                 </div>
-                <div class="review-card">
-                    <div class="review-header">
-                        <img src="https://via.placeholder.com/50" alt="用户头像" class="review-avatar">
+                <!-- 评价卡片4 -->
+                <div class="review-card" style="min-width: 360px; background: white; padding: 35px; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.08); border: 2px solid #f0f8ff; transition: all 0.3s ease;">
+                    <div class="review-header" style="display: flex; align-items: center; margin-bottom: 25px;">
+                        <img src="https://via.placeholder.com/70" alt="用户头像" class="review-avatar" style="width: 70px; height: 70px; border-radius: 50%; margin-right: 20px; object-fit: cover; border: 4px solid #87cefa; box-shadow: 0 0 15px rgba(135, 206, 250, 0.25);">
                         <div>
-                            <div class="review-user">鸣潮-逐光者</div>
-                            <div class="review-rating">★★★★★</div>
+                            <div class="review-user" style="font-size: 20px; color: #222831; font-weight: 600;">鸣潮-逐光者</div>
+                            <div class="review-rating" style="color: #ffd700; margin-top: 8px; font-size: 20px; letter-spacing: 2px;">★★★★★</div>
                         </div>
                     </div>
-                    <div class="review-content">深塔全通+角色大毕业+日常托管一起下单，性价比超高！实验区原本自己卡了一周，代练半天就过了，角色5暴毕业配置效果显著，打副本伤害直接翻倍。日常托管包含活动清剿，每天体力和活跃都拉满，账号安全无任何异常，中间想调整代练优先级，客服马上就安排了，售后体验拉满，已经是第三次下单了，升级成VIP还能享长期折扣～</div>
-                    <div class="review-meta">
-                        <span>服务：深塔全通+角色毕业养成+季度托管</span>
-                        <span>2025-09-22</span>
+                    <div class="review-content" style="font-size: 17px; color: #555555; line-height: 1.9; margin-bottom: 25px; padding: 25px; background: #f8f9fa; border-radius: 12px; border-left: 4px solid #87cefa;">
+                        深塔全通+角色大毕业+日常托管一起下单，性价比超高！实验区原本自己卡了一周，代练半天就过了，角色5暴毕业配置效果显著，打副本伤害直接翻倍。日常托管包含活动清剿，每天体力和活跃都拉满，账号安全无任何异常，中间想调整代练优先级，客服马上就安排了，售后体验拉满，已经是第三次下单了，升级成VIP还能享长期折扣～
+                    </div>
+                    <div class="review-meta" style="font-size: 15px; color: #888888; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+                        <span style="color: #666666; font-weight: 500;">服务：深塔全通+角色毕业养成+季度托管</span>
+                        <span style="color: #666666; font-weight: 500;">2025-09-22</span>
                     </div>
                 </div>
-                <div class="review-card">
-                    <div class="review-header">
-                        <img src="https://via.placeholder.com/50" alt="用户头像" class="review-avatar">
+                <!-- 评价卡片5 -->
+                <div class="review-card" style="min-width: 360px; background: white; padding: 35px; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.08); border: 2px solid #f0f8ff; transition: all 0.3s ease;">
+                    <div class="review-header" style="display: flex; align-items: center; margin-bottom: 25px;">
+                        <img src="https://via.placeholder.com/70" alt="用户头像" class="review-avatar" style="width: 70px; height: 70px; border-radius: 50%; margin-right: 20px; object-fit: cover; border: 4px solid #87cefa; box-shadow: 0 0 15px rgba(135, 206, 250, 0.25);">
                         <div>
-                            <div class="review-user">绝区零-代理人</div>
-                            <div class="review-rating">★★★★★</div>
+                            <div class="review-user" style="font-size: 20px; color: #222831; font-weight: 600;">绝区零-代理人</div>
+                            <div class="review-rating" style="color: #ffd700; margin-top: 8px; font-size: 20px; letter-spacing: 2px;">★★★★★</div>
                         </div>
                     </div>
-                    <div class="review-content">零号空洞全难度+版本活动+咖啡店托管一起安排，代练效率绝了！所有悬赏委托和周奖励都按时完成，咖啡店经营收益拉满，刮刮卡还帮我抽到了稀有道具。客服会提前沟通游戏内注意事项，账号登录全程走正规流程，没有异地登录提醒，活动奖励全部拿到手。邀请了3个公会好友下单，不仅领了45元券，还额外送了3天免费托管，太划算了！</div>
-                    <div class="review-meta">
-                        <span>服务：零号空洞全通+版本活动+月度托管</span>
-                        <span>2025-09-25</span>
+                    <div class="review-content" style="font-size: 17px; color: #555555; line-height: 1.9; margin-bottom: 25px; padding: 25px; background: #f8f9fa; border-radius: 12px; border-left: 4px solid #87cefa;">
+                        零号空洞全难度+版本活动+咖啡店托管一起安排，代练效率绝了！所有悬赏委托和周奖励都按时完成，咖啡店经营收益拉满，刮刮卡还帮我抽到了稀有道具。客服会提前沟通游戏内注意事项，账号登录全程走正规流程，没有异地登录提醒，活动奖励全部拿到手。邀请了3个公会好友下单，不仅领了45元券，还额外送了3天免费托管，太划算了！
+                    </div>
+                    <div class="review-meta" style="font-size: 15px; color: #888888; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+                        <span style="color: #666666; font-weight: 500;">服务：零号空洞全通+版本活动+月度托管</span>
+                        <span style="color: #666666; font-weight: 500;">2025-09-25</span>
                     </div>
                 </div>
             </div>
+            <!-- 滚动提示 -->
+            <div style="text-align: center; margin-top: 20px; font-size: 16px; color: #888888;">
+                <span style="color: #4169e1; margin-right: 8px;">⟵</span> 左右滑动查看更多真实评价 <span style="color: #4169e1; margin-left: 8px;">⟶</span>
+            </div>
         </div>
-        <!-- 联系我们 -->
-        <div class="contact-container" id="contact">
-            <h2>联系我们</h2>
-            <div class="contact-grid">
-                <div class="contact-card">
-                    <div class="contact-icon">📱</div>
-                    <div class="contact-title">微信联系</div>
-                    <div class="contact-value" id="wechat">wese123123</div>
-                    <button class="copy-btn" onclick="copyText('wechat')">复制微信号</button>
+        <!-- 联系我们（优化排版和对比度） -->
+        <div class="contact-container" id="contact" style="max-width: 1200px; margin: 0 auto 60px; padding: 0 20px;">
+            <h2 style="font-size: 28px; color: var(--primary-dark); margin-bottom: 35px; text-align: center; position: relative; display: inline-block; left: 50%; transform: translateX(-50%); font-weight: bold;">📞 联系我们 · 快速对接</h2>
+            <div class="contact-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 35px;">
+                <div class="contact-card" style="background: white; padding: 35px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); text-align: center; transition: all 0.3s; border: 2px solid var(--primary-light);">
+                    <div class="contact-icon" style="width: 80px; height: 80px; margin: 0 auto 25px; background: var(--primary-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 35px; color: var(--primary-dark); box-shadow: 0 0 15px rgba(135, 206, 250, 0.3);">📱</div>
+                    <div class="contact-title" style="font-size: 22px; color: var(--text-dark); margin-bottom: 20px; font-weight: 600;">微信联系</div>
+                    <div class="contact-value" id="wechat" style="font-size: 20px; color: var(--primary-dark); margin-bottom: 25px; font-weight: 600; letter-spacing: 1px;">wese123123</div>
+                    <button class="copy-btn" onclick="copyText('wechat')" style="background: var(--primary); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; padding: 12px 25px; transition: all 0.3s; box-shadow: 0 2px 8px rgba(135, 206, 250, 0.2); font-weight: 500;">复制微信号</button>
                 </div>
-                <div class="contact-card">
-                    <div class="contact-icon">💬</div>
-                    <div class="contact-title">QQ联系</div>
-                    <div class="contact-value" id="qq">1152995977</div>
-                    <button class="copy-btn" onclick="copyText('qq')">复制QQ号</button>
+                <div class="contact-card" style="background: white; padding: 35px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); text-align: center; transition: all 0.3s; border: 2px solid var(--primary-light);">
+                    <div class="contact-icon" style="width: 80px; height: 80px; margin: 0 auto 25px; background: var(--primary-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 35px; color: var(--primary-dark); box-shadow: 0 0 15px rgba(135, 206, 250, 0.3);">💬</div>
+                    <div class="contact-title" style="font-size: 22px; color: var(--text-dark); margin-bottom: 20px; font-weight: 600;">QQ联系</div>
+                    <div class="contact-value" id="qq" style="font-size: 20px; color: var(--primary-dark); margin-bottom: 25px; font-weight: 600; letter-spacing: 1px;">1152995977</div>
+                    <button class="copy-btn" onclick="copyText('qq')" style="background: var(--primary); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; padding: 12px 25px; transition: all 0.3s; box-shadow: 0 2px 8px rgba(135, 206, 250, 0.2); font-weight: 500;">复制QQ号</button>
                 </div>
-                <div class="contact-card">
-                    <div class="contact-icon">📞</div>
-                    <div class="contact-title">电话联系</div>
-                    <div class="contact-value" id="phone">18205804741</div>
-                    <button class="copy-btn" onclick="copyText('phone')">复制手机号</button>
+                <div class="contact-card" style="background: white; padding: 35px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); text-align: center; transition: all 0.3s; border: 2px solid var(--primary-light);">
+                    <div class="contact-icon" style="width: 80px; height: 80px; margin: 0 auto 25px; background: var(--primary-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 35px; color: var(--primary-dark); box-shadow: 0 0 15px rgba(135, 206, 250, 0.3);">📞</div>
+                    <div class="contact-title" style="font-size: 22px; color: var(--text-dark); margin-bottom: 20px; font-weight: 600;">电话联系</div>
+                    <div class="contact-value" id="phone" style="font-size: 20px; color: var(--primary-dark); margin-bottom: 25px; font-weight: 600; letter-spacing: 1px;">18205804741</div>
+                    <button class="copy-btn" onclick="copyText('phone')" style="background: var(--primary); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; padding: 12px 25px; transition: all 0.3s; box-shadow: 0 2px 8px rgba(135, 206, 250, 0.2); font-weight: 500;">复制手机号</button>
                 </div>
             </div>
         </div>
 
-        <!-- 订单查询和反馈 -->
-        <div class="func-container" id="query">
-            <div class="query-module">
-                <h3>订单状态查询</h3>
-                <div class="query-form">
-                    <input type="text" placeholder="输入你的联系方式（微信/QQ/手机号）">
-                    <button>查询</button>
+        <!-- 订单查询和反馈（优化排版和对比度） -->
+        <div class="func-container" id="query" style="max-width: 1200px; margin: 0 auto 60px; display: grid; grid-template-columns: repeat(auto-fit, minmax(500px, 1fr)); gap: 35px; padding: 0 20px;">
+            <div class="query-module" style="background: white; padding: 35px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); border: 2px solid var(--primary-light);">
+                <h3 style="font-size: 24px; color: var(--primary-dark); margin-bottom: 25px; padding-bottom: 15px; border-bottom: 2px solid var(--primary-light); display: flex; align-items: center; font-weight: bold;">🔍 订单状态查询</h3>
+                <div class="query-form" style="display: flex; gap: 15px; margin-bottom: 20px; flex-wrap: wrap;">
+                    <input type="text" placeholder="输入你的联系方式（微信/QQ/手机号）" style="flex: 1; padding: 14px 20px; border: 2px solid var(--primary); border-radius: 8px; font-size: 17px; outline: none; background: white; color: var(--text-dark); min-width: 200px;">
+                    <button style="padding: 14px 28px; background: var(--primary-dark); color: white; border: none; border-radius: 8px; font-size: 17px; cursor: pointer; transition: all 0.3s; box-shadow: 0 2px 8px rgba(65, 105, 225, 0.2); font-weight: 500;">查询订单进度</button>
                 </div>
-                <p>提交订单后1小时内更新状态，可查询进度（未开始/进行中/已完成）</p>
-                <p>温馨提示：查询结果将通过你预留的联系方式同步，也可直接联系客服咨询</p>
+                <p style="font-size: 16px; color: var(--text-gray); margin-top: 10px; line-height: 1.8;">提交订单后1小时内更新状态，可查询进度（未开始/进行中/已完成）</p>
+                <p style="font-size: 16px; color: var(--text-gray); margin-top: 10px; line-height: 1.8;">温馨提示：查询结果将通过你预留的联系方式同步，也可直接联系客服咨询</p>
             </div>
-            <div class="feedback-module">
-                <h3>用户反馈</h3>
+            <div class="feedback-module" style="background: white; padding: 35px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); border: 2px solid var(--primary-light);">
+                <h3 style="font-size: 24px; color: var(--primary-dark); margin-bottom: 25px; padding-bottom: 15px; border-bottom: 2px solid var(--primary-light); display: flex; align-items: center; font-weight: bold;">💬 用户反馈</h3>
                 <form class="feedback-form">
-                    <div class="form-group">
-                        <label>反馈类型</label>
-                        <select>
+                    <div class="form-group" style="margin-bottom: 25px;">
+                        <label style="font-size: 17px; color: var(--text-dark); display: block; margin-bottom: 12px; font-weight: 500;">反馈类型</label>
+                        <select style="width: 100%; padding: 14px 20px; border: 2px solid var(--primary); border-radius: 8px; font-size: 17px; outline: none; background: white; color: var(--text-dark);">
                             <option value="">请选择反馈类型</option>
                             <option value="suggest">功能建议</option>
                             <option value="problem">使用问题</option>
@@ -995,43 +1081,43 @@
                             <option value="praise">表扬鼓励</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label>反馈内容</label>
-                        <textarea placeholder="请详细描述你的反馈内容..."></textarea>
+                    <div class="form-group" style="margin-bottom: 25px;">
+                        <label style="font-size: 17px; color: var(--text-dark); display: block; margin-bottom: 12px; font-weight: 500;">反馈内容</label>
+                        <textarea placeholder="请详细描述你的反馈内容..." style="width: 100%; padding: 14px 20px; border: 2px solid var(--primary); border-radius: 8px; font-size: 17px; outline: none; background: var(--primary-light); color: var(--text-dark); resize: none; height: 150px;"></textarea>
                     </div>
-                    <div class="form-group">
-                        <label>联系方式（可选）</label>
-                        <input type="text" placeholder="留下你的微信/QQ/手机号，方便我们回复">
+                    <div class="form-group" style="margin-bottom: 25px;">
+                        <label style="font-size: 17px; color: var(--text-dark); display: block; margin-bottom: 12px; font-weight: 500;">联系方式（可选）</label>
+                        <input type="text" placeholder="留下你的微信/QQ/手机号，方便我们回复" style="width: 100%; padding: 14px 20px; border: 2px solid var(--primary); border-radius: 8px; font-size: 17px; outline: none; background: white; color: var(--text-dark);">
                     </div>
-                    <button type="button">提交反馈</button>
+                    <button type="button" style="padding: 14px 28px; background: var(--primary); color: white; border: none; border-radius: 8px; font-size: 17px; cursor: pointer; transition: all 0.3s; box-shadow: 0 2px 8px rgba(135, 206, 250, 0.2); font-weight: 500;">提交反馈</button>
                 </form>
             </div>
         </div>
     </main>
 
-    <!-- 悬浮客服按钮 -->
-    <div class="float-contact">
-        <div class="float-tooltip">联系在线客服</div>
-        <button class="float-btn" onclick="showContactInfo()">📞</button>
+    <!-- 悬浮客服按钮（优化样式） -->
+    <div class="float-contact" style="position: fixed; bottom: 40px; right: 40px; z-index: 999; animation: bounce 2s infinite alternate;">
+        <div class="float-tooltip" style="position: absolute; bottom: 70px; right: 0; background: white; padding: 12px 20px; border-radius: 8px; box-shadow: 0 3px 10px rgba(0,0,0,0.1); font-size: 17px; white-space: nowrap; color: var(--primary-dark); font-weight: 500; opacity: 0; visibility: hidden; transition: all 0.3s;">联系在线客服</div>
+        <button class="float-btn" onclick="showContactInfo()" style="width: 70px; height: 70px; border-radius: 50%; background: var(--primary-dark); color: white; border: none; box-shadow: 0 5px 15px rgba(135, 206, 250, 0.5); font-size: 28px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s;">📞</button>
     </div>
-    <!-- 页脚 -->
-    <footer class="footer">
-        <div class="footer-logo">次元<span>脉动</span></div>
-        <div class="footer-contact">
-            <p>微信：wese123123 | QQ：1152995977 | 电话：18205804741</p>
+    <!-- 页脚（优化排版和对比度） -->
+    <footer class="footer" style="background: linear-gradient(135deg, var(--bg-dark), #2A2A40); color: white; text-align: center; padding: 60px 0 30px; margin-top: 60px; border-top: 3px solid var(--primary); box-shadow: 0 -5px 20px rgba(0,0,0,0.3);">
+        <div class="footer-logo" style="font-size: 32px; margin-bottom: 25px; text-shadow: 0 0 10px var(--primary); font-weight: bold;">次元<span style="color: var(--primary);">脉动</span></div>
+        <div class="footer-contact" style="margin-bottom: 35px; font-size: 18px; line-height: 2.2;">
+            <p style="margin-bottom: 15px;">微信：wese123123 | QQ：1152995977 | 电话：18205804741</p>
             <p>纯手工代练 | 安全高效 | 透明价格 | 无隐形消费 | 全程可查</p>
         </div>
-        <div class="footer-links">
-            <a href="#home" class="footer-link">首页</a>
-            <a href="#services" class="footer-link">服务列表</a>
-            <a href="#discount" class="footer-link">优惠活动</a>
-            <a href="#security" class="footer-link">服务保障</a>
-            <a href="#reviews" class="footer-link">用户评价</a>
-            <a href="#contact" class="footer-link">联系我们</a>
-            <a href="order.html" class="footer-link">订单提交</a> <!-- 新增订单提交快捷入口 -->
-            <a href="#query" class="footer-link">订单查询</a>
+        <div class="footer-links" style="display: flex; justify-content: center; gap: 35px; margin-bottom: 40px; flex-wrap: wrap; padding: 0 20px;">
+            <a href="#home" class="footer-link" style="color: var(--primary-light); text-decoration: none; font-size: 17px; transition: all 0.3s; position: relative; padding-bottom: 5px;">首页</a>
+            <a href="#services" class="footer-link" style="color: var(--primary-light); text-decoration: none; font-size: 17px; transition: all 0.3s; position: relative; padding-bottom: 5px;">服务列表</a>
+            <a href="#discount" class="footer-link" style="color: var(--primary-light); text-decoration: none; font-size: 17px; transition: all 0.3s; position: relative; padding-bottom: 5px;">优惠活动</a>
+            <a href="#security" class="footer-link" style="color: var(--primary-light); text-decoration: none; font-size: 17px; transition: all 0.3s; position: relative; padding-bottom: 5px;">服务保障</a>
+            <a href="#reviews" class="footer-link" style="color: var(--primary-light); text-decoration: none; font-size: 17px; transition: all 0.3s; position: relative; padding-bottom: 5px;">用户评价</a>
+            <a href="#contact" class="footer-link" style="color: var(--primary-light); text-decoration: none; font-size: 17px; transition: all 0.3s; position: relative; padding-bottom: 5px;">联系我们</a>
+            <a href="order.html" class="footer-link" style="color: var(--primary-light); text-decoration: none; font-size: 17px; transition: all 0.3s; position: relative; padding-bottom: 5px;">订单提交</a>
+            <a href="#query" class="footer-link" style="color: var(--primary-light); text-decoration: none; font-size: 17px; transition: all 0.3s; position: relative; padding-bottom: 5px;">订单查询</a>
         </div>
-        <div class="footer-copyright">© 2025 次元脉动 版权所有 | 专业游戏代肝平台</div>
+        <div class="footer-copyright" style="font-size: 16px; color: var(--text-light); margin-top: 20px; padding: 0 20px;">© 2025 次元脉动 版权所有 | 专业游戏代肝平台 | 纯手工操作 · 安全无忧</div>
     </footer>
 
     <script>
@@ -1054,6 +1140,17 @@
         // 页面加载完成后执行
         window.onload = function() {
             createStars();
+            // 初始化页脚链接下划线动画
+            document.querySelectorAll('.footer-link').forEach(link => {
+                link.addEventListener('mouseover', function() {
+                    this.style.color = var(--primary);
+                    this.style.borderBottom = '2px solid var(--primary)';
+                });
+                link.addEventListener('mouseout', function() {
+                    this.style.color = var(--primary-light);
+                    this.style.borderBottom = 'none';
+                });
+            });
         };
 
         // 导航栏滚动到对应区域
@@ -1061,7 +1158,7 @@
             const element = document.getElementById(id);
             if (element) {
                 window.scrollTo({
-                    top: element.offsetTop - 100,
+                    top: element.offsetTop - 120,
                     behavior: 'smooth'
                 });
                 // 更新导航按钮激活状态
@@ -1128,9 +1225,9 @@
         function copyText(elementId) {
             const text = document.getElementById(elementId).textContent;
             navigator.clipboard.writeText(text).then(() => {
-                alert('复制成功！');
+                alert(`复制成功！已复制${elementId === 'wechat' ? '微信号' : elementId === 'qq' ? 'QQ号' : '手机号'}：${text}`);
             }).catch(err => {
-                alert('复制失败，请手动复制');
+                alert("复制失败，请手动复制");
                 console.error(err);
             });
         }
@@ -1138,6 +1235,12 @@
         // 显示联系信息
         function showContactInfo() {
             alert('客服联系方式：\n微信：wese123123\nQQ：1152995977\n电话：18205804741');
+        }
+
+        // 悬浮按钮弹跳动画
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-10px); }
         }
     </script>
 </body>
